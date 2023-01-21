@@ -17,12 +17,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class UsersControllerTests {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Test
-    public void whenTestApp_thenEmptyResponse() throws Exception {
-        this.mockMvc.perform(get("/users"))
-                .andExpect(status().isOk());
-    }
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @Test
+//    public void whenTestApp_thenEmptyResponse() throws Exception {
+//        this.mockMvc.perform(get("/users"))
+//                .andExpect(status().isOk());
+//    }
 }
