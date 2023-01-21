@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+
+  backend:
+    image: mjsasha/backend:1.0.0
+    container_name: backend_1.0.0
+    ports:
+      - "8080:8080"
+    environment:
+      UPLOADED_FILES_FOLDER_PATH: /uploaded-files
