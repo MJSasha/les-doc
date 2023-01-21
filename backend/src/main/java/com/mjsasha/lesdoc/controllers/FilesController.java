@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin(maxAge = 3600)
 @RequestMapping("/files")
 public class FilesController {
 
