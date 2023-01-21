@@ -2,6 +2,7 @@ package com.mjsasha.lesdoc.controllers;
 
 import com.mjsasha.lesdoc.data.models.UploadFileResponse;
 import com.mjsasha.lesdoc.services.FileStorageService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ public class FilesController {
         this.fileStorageService = fileStorageService;
     }
 
+    @Operation(summary = "Use for upload one file")
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
@@ -44,6 +46,7 @@ public class FilesController {
                 file.getContentType(), file.getSize());
     }
 
+    @Operation(summary = "Use for upload many file")
     @PostMapping("/uploadMultipleFiles")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.stream(files)
@@ -51,6 +54,7 @@ public class FilesController {
                 .collect(Collectors.toList());
     }
 
+    @Operation(summary = "Use for download uploaded files")
     @GetMapping("/uploadedFiles/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = fileStorageService.loadFileAsResource(fileName);
@@ -59,7 +63,7 @@ public class FilesController {
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
         } catch (IOException ex) {
-            logger.info("Could not determine file type.");
+            logger.warn("Could not determine file type.");
         }
 
         if (contentType == null) {
