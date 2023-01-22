@@ -3,8 +3,8 @@ version: "3"
 services:
 
   backend:
-    image: mjsasha/backend:1.0.0
-    container_name: backend_1.0.0
+    image: mjsasha/backend:1.0.1
+    container_name: backend_1.0.1
     build: .
     ports:
       - "8080:8080"
