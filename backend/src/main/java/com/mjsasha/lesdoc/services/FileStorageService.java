@@ -63,4 +63,14 @@ public class FileStorageService {
             throw new FileNotFoundException("File not found " + fileName, ex);
         }
     }
+
+    public void createDirectory(String name) {
+        try {
+            Files.createDirectories(Paths.get(fileStorageLocation.getRoot() + "/" + name)
+                    .toAbsolutePath()
+                    .normalize());
+        } catch (Exception ex) {
+            throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", ex);
+        }
+    }
 }
