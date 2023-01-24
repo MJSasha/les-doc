@@ -82,7 +82,7 @@ public class FilesController {
                 .body(resource);
     }
 
-    @Operation(summary = "Use for getting all files name in lesson's folder")
+    @Operation(summary = "Used to get the names of all files in the lesson folder")
     @GetMapping("/getAllFilesNames")
     public String[] getAllFilesName(@RequestParam Integer lessonId) {
         Lesson lesson = lessonsService.read(lessonId);

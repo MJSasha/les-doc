@@ -1,8 +1,11 @@
 package com.mjsasha.lesdoc.services;
 
 import com.mjsasha.lesdoc.data.entities.Lesson;
+import com.mjsasha.lesdoc.exceptions.EntityNotFoundException;
 import com.mjsasha.lesdoc.repositories.LessonsRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class LessonsService {
@@ -21,6 +24,22 @@ public class LessonsService {
     }
 
     public Lesson read(Integer id) {
-        return lessonsRepository.findById(id).get();
+        var lesson = lessonsRepository.findById(id).orElse(null);
+        if (lesson == null) throw new EntityNotFoundException("Lesson with id " + id + " not exist");
+        return lesson;
+    }
+
+    public List<Lesson> read() {
+        var lessons = (List<Lesson>) lessonsRepository.findAll();
+        if (lessons.isEmpty()) throw new EntityNotFoundException("No existing lessons");
+        return lessons;
+    }
+
+    public void delete(Integer id) {
+        try {
+            lessonsRepository.deleteById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

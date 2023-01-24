@@ -16,4 +16,5 @@ public class Lesson {
 
     private String name;
     private String folderName = Lesson.class.getName();
+    private String description;
 }
