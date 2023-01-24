@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 import java.util.Objects;
 
 @Service
@@ -33,7 +35,7 @@ public class FileStorageService {
         }
     }
 
-    public String storeFile(MultipartFile file) {
+    public String storeFile(MultipartFile file, String folderName) {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         try {
@@ -41,7 +43,11 @@ public class FileStorageService {
                 throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
             }
 
-            Path targetLocation = this.fileStorageLocation.resolve(fileName);
+            Path targetLocation = Paths.get(fileStorageLocation.toString())
+                    .toAbsolutePath()
+                    .normalize()
+                    .resolve(folderName)
+                    .resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
             return fileName;
@@ -50,9 +56,11 @@ public class FileStorageService {
         }
     }
 
-    public Resource loadFileAsResource(String fileName) {
+    public Resource loadFileAsResource(String fileName, String folderName) {
         try {
-            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Path filePath = Paths.get(fileStorageLocation.toString() + "/" + folderName)
+                    .toAbsolutePath()
+                    .normalize().resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists()) {
                 return resource;
@@ -64,11 +72,22 @@ public class FileStorageService {
         }
     }
 
+    public String[] getAllFilesName(String folderName) {
+        Path filePath = Paths.get(fileStorageLocation.toString())
+                .toAbsolutePath()
+                .normalize().resolve(folderName).normalize();
+        File folder = new File(filePath.toString());
+        File[] files = folder.listFiles();
+        if (files == null) throw new FileNotFoundException("No files in folder");
+        return Arrays.stream(files).map(File::getName).toArray(String[]::new);
+    }
+
     public void createDirectory(String name) {
         try {
-            Files.createDirectories(Paths.get(fileStorageLocation.getRoot() + "/" + name)
+            Files.createDirectories(Paths.get(fileStorageLocation.toString())
                     .toAbsolutePath()
-                    .normalize());
+                    .normalize()
+                    .resolve(name));
         } catch (Exception ex) {
             throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", ex);
         }

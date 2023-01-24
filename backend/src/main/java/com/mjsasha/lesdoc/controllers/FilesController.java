@@ -1,7 +1,9 @@
 package com.mjsasha.lesdoc.controllers;
 
+import com.mjsasha.lesdoc.data.entities.Lesson;
 import com.mjsasha.lesdoc.data.models.UploadFileResponse;
 import com.mjsasha.lesdoc.services.FileStorageService;
+import com.mjsasha.lesdoc.services.LessonsService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -27,15 +29,18 @@ public class FilesController {
     private static final Logger logger = LoggerFactory.getLogger(FilesController.class);
 
     private final FileStorageService fileStorageService;
+    private final LessonsService lessonsService;
 
-    public FilesController(FileStorageService fileStorageService) {
+    public FilesController(FileStorageService fileStorageService, LessonsService lessonsService) {
         this.fileStorageService = fileStorageService;
+        this.lessonsService = lessonsService;
     }
 
     @Operation(summary = "Use for upload one file")
     @PostMapping("/uploadFile")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
-        String fileName = fileStorageService.storeFile(file);
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file, @RequestParam Integer lessonId) {
+        Lesson lesson = lessonsService.read(lessonId);
+        String fileName = fileStorageService.storeFile(file, lesson.getFolderName());
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
@@ -48,16 +53,17 @@ public class FilesController {
 
     @Operation(summary = "Use for upload many file")
     @PostMapping("/uploadMultipleFiles")
-    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
+    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files, @RequestParam Integer lessonId) {
         return Arrays.stream(files)
-                .map(this::uploadFile)
+                .map(file -> uploadFile(file, lessonId))
                 .collect(Collectors.toList());
     }
 
     @Operation(summary = "Use for download uploaded files")
-    @GetMapping("/uploadedFiles/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
-        Resource resource = fileStorageService.loadFileAsResource(fileName);
+    @GetMapping("/downloadFile/{fileName:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, @RequestParam Integer lessonId, HttpServletRequest request) {
+        Lesson lesson = lessonsService.read(lessonId);
+        Resource resource = fileStorageService.loadFileAsResource(fileName, lesson.getFolderName());
 
         String contentType = null;
         try {
@@ -74,5 +80,12 @@ public class FilesController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
+    }
+
+    @Operation(summary = "Use for getting all files name in lesson's folder")
+    @GetMapping("/getAllFilesNames")
+    public String[] getAllFilesName(@RequestParam Integer lessonId) {
+        Lesson lesson = lessonsService.read(lessonId);
+        return fileStorageService.getAllFilesName(lesson.getFolderName());
     }
 }

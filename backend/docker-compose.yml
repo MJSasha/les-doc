@@ -3,8 +3,8 @@ version: "3"
 services:
 
   backend:
-    image: mjsasha/backend:1.2.0
-    container_name: backend_1.2.0
+    image: mjsasha/backend:2.0.0
+    container_name: backend_2.0.0
     build: .
     depends_on:
       - db

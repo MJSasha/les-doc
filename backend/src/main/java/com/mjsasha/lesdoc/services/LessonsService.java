@@ -19,4 +19,8 @@ public class LessonsService {
         fileStorageService.createDirectory(lesson.getFolderName());
         lessonsRepository.save(lesson);
     }
+
+    public Lesson read(Integer id) {
+        return lessonsRepository.findById(id).get();
+    }
 }
