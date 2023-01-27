@@ -20,7 +20,7 @@ class LessonsServiceTest {
 
     @Test
     void readReturnAnyEntities() {
-        Mockito.when(lessonsRepository.findAll()).thenReturn(TestData.notEmptyLessonsList);
+        Mockito.when(lessonsRepository.findAll()).thenReturn(TestData.NOT_EMPTY_LESSONS_LIST);
 
         List<Lesson> lessons = lessonsService.read();
 
@@ -36,7 +36,7 @@ class LessonsServiceTest {
 
     @Test
     void readExistingEntity() {
-        Mockito.when(lessonsRepository.findById(1)).thenReturn(Optional.of(TestData.notEmptyLessonsList.get(0)));
+        Mockito.when(lessonsRepository.findById(1)).thenReturn(Optional.of(TestData.NOT_EMPTY_LESSONS_LIST.get(0)));
 
         var lesson = lessonsService.read(1);
 
