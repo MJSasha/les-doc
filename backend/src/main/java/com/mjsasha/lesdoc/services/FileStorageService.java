@@ -56,12 +56,9 @@ public class FileStorageService {
         }
     }
 
-    // TODO: 27.01.2023 refactor
     public Resource loadFileAsResource(String fileName, String folderName) {
         try {
-            Path filePath = Paths.get(fileStorageLocation.toString() + "/" + folderName)
-                    .toAbsolutePath()
-                    .normalize().resolve(fileName).normalize();
+            Path filePath = fileStorageLocation.resolve(folderName).resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
 
             if (resource.exists()) return resource;

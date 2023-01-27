@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.core.io.Resource;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,8 +18,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 
 import static org.apache.tomcat.util.http.fileupload.FileUtils.deleteDirectory;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class FileStorageServiceTest {
 
@@ -38,6 +38,12 @@ class FileStorageServiceTest {
     @BeforeAll
     static void createTestDirectory() throws IOException {
         Files.createDirectories(TEST_DIRECTORY_LOCATION);
+
+        Files.createDirectory(TEST_DIRECTORY_LOCATION.resolve(NOT_EMPTY_DIRECTORY_NAME));
+        Files.copy(TestData.mockFile.getInputStream(),
+                TEST_DIRECTORY_LOCATION
+                        .resolve(NOT_EMPTY_DIRECTORY_NAME)
+                        .resolve(TestData.mockFile.getOriginalFilename()));
     }
 
     @AfterAll
@@ -50,6 +56,25 @@ class FileStorageServiceTest {
         }
 
         Files.delete(TEST_DIRECTORY_LOCATION);
+    }
+
+    @Test
+    void loadNotExistingFolder() {
+        assertThrows(FileNotFoundException.class,
+                () -> fileStorageService.loadFileAsResource("not-existing-txt", "not-existing-folder-name"));
+    }
+
+    @Test
+    void loadNotExistingResource() {
+        assertThrows(FileNotFoundException.class,
+                () -> fileStorageService.loadFileAsResource("not-existing-txt", NOT_EMPTY_DIRECTORY_NAME));
+    }
+
+    @Test
+    void loadExistingResource() throws IOException {
+        Resource resource = fileStorageService.loadFileAsResource(TestData.mockFile.getOriginalFilename(), NOT_EMPTY_DIRECTORY_NAME);
+
+        assertEquals(resource.getFile().getName(), TestData.mockFile.getOriginalFilename());
     }
 
     @Test
@@ -75,12 +100,6 @@ class FileStorageServiceTest {
 
     @Test
     void getFilenamesFromNotEmptyFolder() throws IOException {
-        Files.createDirectory(TEST_DIRECTORY_LOCATION.resolve(NOT_EMPTY_DIRECTORY_NAME));
-        Files.copy(TestData.mockFile.getInputStream(),
-                TEST_DIRECTORY_LOCATION
-                        .resolve(NOT_EMPTY_DIRECTORY_NAME)
-                        .resolve(TestData.mockFile.getOriginalFilename()));
-
         String[] allFilesNames = fileStorageService.getAllFilesNames(NOT_EMPTY_DIRECTORY_NAME);
 
         assertTrue(Arrays.stream(allFilesNames).anyMatch(name -> name.equals(TestData.mockFile.getOriginalFilename())));
