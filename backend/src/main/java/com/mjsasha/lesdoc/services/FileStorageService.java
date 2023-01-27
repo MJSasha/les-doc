@@ -40,9 +40,8 @@ public class FileStorageService {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         try {
-            if (fileName.contains("..")) {
+            if (fileName.contains(".."))
                 throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
-            }
 
             Path targetLocation = Paths.get(fileStorageLocation.toString())
                     .toAbsolutePath()
@@ -64,11 +63,9 @@ public class FileStorageService {
                     .toAbsolutePath()
                     .normalize().resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
-            if (resource.exists()) {
-                return resource;
-            } else {
-                throw new FileNotFoundException("File not found " + fileName);
-            }
+
+            if (resource.exists()) return resource;
+            else throw new FileNotFoundException("File not found " + fileName);
         } catch (MalformedURLException ex) {
             throw new FileNotFoundException("File not found " + fileName, ex);
         }
@@ -76,9 +73,11 @@ public class FileStorageService {
 
     public String[] getAllFilesNames(String folderName) {
         Path filePath = fileStorageLocation.resolve(folderName);
-        File folder = new File(filePath.toString());
-        File[] files = folder.listFiles();
-        if (files != null && files.length == 0) throw new FileNotFoundException("No files in folder");
+        File[] files = filePath.toFile().listFiles();
+
+        if (files == null) throw new FileStorageException("Directory not found");
+        if (files.length == 0) throw new FileNotFoundException("No files in folder");
+
         return Arrays.stream(files).map(File::getName).toArray(String[]::new);
     }
 

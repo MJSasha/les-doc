@@ -53,11 +53,18 @@ class FileStorageServiceTest {
     }
 
     @Test
+    void getFilenamesFromNotExistingFolder() {
+        assertThrows(FileStorageException.class,
+                () -> fileStorageService.getAllFilesNames("not-existing-folder-name"));
+    }
+
+    @Test
     void getFilenamesFromEmptyFolder() throws IOException {
         String notEmptyDirectoryName = "empty-dir";
         Files.createDirectory(TestData.testDirectoryLocation.resolve(notEmptyDirectoryName));
 
-        assertThrows(FileNotFoundException.class, () -> fileStorageService.getAllFilesNames(notEmptyDirectoryName));
+        assertThrows(FileNotFoundException.class,
+                () -> fileStorageService.getAllFilesNames(notEmptyDirectoryName));
     }
 
     @Test
