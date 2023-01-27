@@ -72,6 +72,7 @@ public class FileStorageService {
         }
     }
 
+    // TODO: 27.01.2023 refactor
     public String[] getAllFilesName(String folderName) {
         Path filePath = Paths.get(fileStorageLocation.toString())
                 .toAbsolutePath()
@@ -84,10 +85,7 @@ public class FileStorageService {
 
     public void createDirectory(String name) {
         try {
-            Files.createDirectories(Paths.get(fileStorageLocation.toString())
-                    .toAbsolutePath()
-                    .normalize()
-                    .resolve(name));
+            Files.createDirectories(fileStorageLocation.resolve(name));
         } catch (Exception ex) {
             throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", ex);
         }
