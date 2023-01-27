@@ -16,11 +16,18 @@ public class TestData {
             new Lesson(3, "Third lesson", "Third folder", "Third description")
     ));
 
-    public static final MultipartFile mockFile = new MockMultipartFile(
+    public static final MultipartFile existingFile = new MockMultipartFile(
             "file",
             "hello.txt",
             MediaType.TEXT_PLAIN_VALUE,
             "Hello, World!".getBytes()
+    );
+
+    public static final MultipartFile mockFile = new MockMultipartFile(
+            "file",
+            "hello_created.txt",
+            MediaType.TEXT_PLAIN_VALUE,
+            "Hello, World Created!".getBytes()
     );
 
     public static final MultipartFile invalidMockFile = new MockMultipartFile(

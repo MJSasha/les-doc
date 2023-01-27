@@ -40,10 +40,10 @@ class FileStorageServiceTest {
         Files.createDirectories(TEST_DIRECTORY_LOCATION);
 
         Files.createDirectory(TEST_DIRECTORY_LOCATION.resolve(NOT_EMPTY_DIRECTORY_NAME));
-        Files.copy(TestData.mockFile.getInputStream(),
+        Files.copy(TestData.existingFile.getInputStream(),
                 TEST_DIRECTORY_LOCATION
                         .resolve(NOT_EMPTY_DIRECTORY_NAME)
-                        .resolve(TestData.mockFile.getOriginalFilename()));
+                        .resolve(TestData.existingFile.getOriginalFilename()));
     }
 
     @AfterAll
@@ -56,6 +56,28 @@ class FileStorageServiceTest {
         }
 
         Files.delete(TEST_DIRECTORY_LOCATION);
+    }
+
+    @Test
+    void storeFileWithIncorrectName() {
+        assertThrows(FileStorageException.class,
+                () -> fileStorageService.storeFile(TestData.invalidMockFile, "not-matter"));
+    }
+
+    @Test
+    void storeFileToNotExistingFolder() {
+        assertThrows(FileStorageException.class,
+                () -> fileStorageService.storeFile(TestData.mockFile, "not-exist"));
+    }
+
+    @Test
+    void storeFileToExistingFolder() {
+        String storedFileName = fileStorageService.storeFile(TestData.mockFile, NOT_EMPTY_DIRECTORY_NAME);
+
+        assertEquals(storedFileName, TestData.mockFile.getOriginalFilename());
+        assertTrue(Files.exists(TEST_DIRECTORY_LOCATION
+                .resolve(NOT_EMPTY_DIRECTORY_NAME)
+                .resolve(TestData.mockFile.getOriginalFilename())));
     }
 
     @Test
@@ -72,9 +94,9 @@ class FileStorageServiceTest {
 
     @Test
     void loadExistingResource() throws IOException {
-        Resource resource = fileStorageService.loadFileAsResource(TestData.mockFile.getOriginalFilename(), NOT_EMPTY_DIRECTORY_NAME);
+        Resource resource = fileStorageService.loadFileAsResource(TestData.existingFile.getOriginalFilename(), NOT_EMPTY_DIRECTORY_NAME);
 
-        assertEquals(resource.getFile().getName(), TestData.mockFile.getOriginalFilename());
+        assertEquals(resource.getFile().getName(), TestData.existingFile.getOriginalFilename());
     }
 
     @Test
@@ -102,7 +124,7 @@ class FileStorageServiceTest {
     void getFilenamesFromNotEmptyFolder() throws IOException {
         String[] allFilesNames = fileStorageService.getAllFilesNames(NOT_EMPTY_DIRECTORY_NAME);
 
-        assertTrue(Arrays.stream(allFilesNames).anyMatch(name -> name.equals(TestData.mockFile.getOriginalFilename())));
+        assertTrue(Arrays.stream(allFilesNames).anyMatch(name -> name.equals(TestData.existingFile.getOriginalFilename())));
     }
 
     @Test
