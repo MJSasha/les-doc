@@ -85,6 +85,6 @@ public class FilesController {
     @GetMapping("/getAllFilesNames")
     public String[] getAllFilesName(@RequestParam Integer lessonId) {
         Lesson lesson = lessonsService.read(lessonId);
-        return fileStorageService.getAllFilesName(lesson.getFolderName());
+        return fileStorageService.getAllFilesNames(lesson.getFolderName());
     }
 }

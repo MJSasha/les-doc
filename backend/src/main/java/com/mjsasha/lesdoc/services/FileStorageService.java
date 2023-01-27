@@ -35,6 +35,7 @@ public class FileStorageService {
         }
     }
 
+    // TODO: 27.01.2023 refactor
     public String storeFile(MultipartFile file, String folderName) {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
@@ -56,6 +57,7 @@ public class FileStorageService {
         }
     }
 
+    // TODO: 27.01.2023 refactor
     public Resource loadFileAsResource(String fileName, String folderName) {
         try {
             Path filePath = Paths.get(fileStorageLocation.toString() + "/" + folderName)
@@ -72,14 +74,11 @@ public class FileStorageService {
         }
     }
 
-    // TODO: 27.01.2023 refactor
-    public String[] getAllFilesName(String folderName) {
-        Path filePath = Paths.get(fileStorageLocation.toString())
-                .toAbsolutePath()
-                .normalize().resolve(folderName).normalize();
+    public String[] getAllFilesNames(String folderName) {
+        Path filePath = fileStorageLocation.resolve(folderName);
         File folder = new File(filePath.toString());
         File[] files = folder.listFiles();
-        if (files == null) throw new FileNotFoundException("No files in folder");
+        if (files != null && files.length == 0) throw new FileNotFoundException("No files in folder");
         return Arrays.stream(files).map(File::getName).toArray(String[]::new);
     }
 
