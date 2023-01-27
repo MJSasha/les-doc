@@ -35,7 +35,6 @@ public class FileStorageService {
         }
     }
 
-    // TODO: 27.01.2023 refactor
     public String storeFile(MultipartFile file, String folderName) {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
