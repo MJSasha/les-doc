@@ -18,7 +18,7 @@ public class TestData {
 
     public static final MultipartFile EXISTING_FILE = new MockMultipartFile(
             "file",
-            "hello.txt",
+            "hello.docx",
             MediaType.TEXT_PLAIN_VALUE,
             "Hello, World!".getBytes()
     );
