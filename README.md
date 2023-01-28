@@ -8,7 +8,7 @@ The project consists of two parts: **Frontend** and **Backend**.
 
 **Backend** is a `Java` project in the `Spring` framework
 
-**Frontend** ...
+**Frontend** is a `React` application with `Typescript` compiled by `Webpack`
 
 ## **Project Stack**
 
@@ -19,6 +19,8 @@ The project consists of two parts: **Frontend** and **Backend**.
 ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
+![Bootstrap](https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 
@@ -35,3 +37,10 @@ docker-compose up
 ```
 
 The API is deployed on port 8080, while SwaggerUI is available via the link [http://localhost:8080/api/swagger-ui.html](http://localhost:8080/api/swagger-ui.html).
+
+### **Launching React App**
+
+``` bash
+yarn install
+yarn start
+```
