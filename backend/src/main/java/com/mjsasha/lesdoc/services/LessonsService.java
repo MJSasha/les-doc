@@ -36,10 +36,10 @@ public class LessonsService {
     }
 
     public void delete(Integer id) {
-        try {
-            lessonsRepository.deleteById(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Lesson lesson = read(id);
+        if (lesson == null) throw new EntityNotFoundException("Entity with id-" + id + " not exist.");
+
+        fileStorageService.removeDirectory(lesson.getFolderName());
+        lessonsRepository.deleteById(id);
     }
 }

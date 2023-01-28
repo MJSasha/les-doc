@@ -49,4 +49,18 @@ class LessonsServiceTest {
 
         assertThrows(EntityNotFoundException.class, () -> lessonsService.read(1));
     }
+
+    @Test
+    void deleteExistingLesson() {
+        Mockito.when(lessonsRepository.findById(1)).thenReturn(Optional.of(TestData.NOT_EMPTY_LESSONS_LIST.get(0)));
+
+        assertDoesNotThrow(() -> lessonsService.delete(1));
+    }
+
+    @Test
+    void deleteNotExistingLesson() {
+        Mockito.when(lessonsRepository.findById(1)).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> lessonsService.delete(1));
+    }
 }

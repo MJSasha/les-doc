@@ -143,4 +143,20 @@ class FileStorageServiceTest {
         assertThrows(FileStorageException.class,
                 () -> fileStorageService.createDirectory(incorrectDirectoryName));
     }
+
+    @Test
+    void removeExistingDirectory() throws IOException {
+        String subdirectoryName = "sub-directory";
+        Files.createDirectories(TEST_DIRECTORY_LOCATION.resolve(subdirectoryName));
+
+        fileStorageService.removeDirectory(subdirectoryName);
+
+        assertFalse(Files.exists(TEST_DIRECTORY_LOCATION.resolve(subdirectoryName)));
+    }
+
+    @Test
+    void removeNotExistingDirectory() {
+        assertThrows(FileStorageException.class,
+                () -> fileStorageService.removeDirectory("note-existing-directory"));
+    }
 }
