@@ -23,6 +23,6 @@ public class Lesson {
     @NotBlank
     private String name;
     @Schema(description = "If not specified, the lesson name is used")
-    private String folderName = name;
+    private String folderName;
     private String description;
 }
