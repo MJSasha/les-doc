@@ -81,7 +81,7 @@ class FileStorageServiceTest {
     }
 
     @Test
-    void loadNotExistingFolder() {
+    void loadFileFromNotExistingFolder() {
         assertThrows(FileNotFoundException.class,
                 () -> fileStorageService.loadFileAsResource("not-existing-txt", "not-existing-folder-name"));
     }

@@ -19,6 +19,6 @@ public class Lesson {
     private Integer id;
 
     private String name;
-    private String folderName = Lesson.class.getName();
+    private String folderName = name;
     private String description;
 }
