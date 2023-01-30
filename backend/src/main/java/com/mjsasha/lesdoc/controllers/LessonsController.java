@@ -20,7 +20,7 @@ public class LessonsController {
 
     @Operation(summary = "Used to create a lesson")
     @PostMapping
-    public void create(Lesson lesson) {
+    public void create(@RequestBody Lesson lesson) {
         lessonsService.create(lesson);
     }
 
