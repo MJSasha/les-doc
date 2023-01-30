@@ -3,7 +3,6 @@ import {url} from "../Constants/Constants";
 
 const upload = (file: File, onUploadProgress: any): Promise<any> => {
     let formData = new FormData();
-
     formData.append("file", file);
 
     return axios.post(url+'files/uploadFile', formData, {
