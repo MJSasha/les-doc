@@ -24,15 +24,15 @@ public class PspdfkitFilesConverterClient implements FileConverter {
         this.externalApiProperties = externalApiProperties;
     }
 
-    public Resource convertToPdf(Resource file) throws JSONException, IOException {
+    public Resource convertToPdf(Resource resource) throws JSONException, IOException {
 
         final RequestBody body = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart(
-                        file.getFilename(),
-                        file.getFile().getName(),
+                        resource.getFilename(),
+                        resource.getFile().getName(),
                         RequestBody.create(
-                                file.getFile(),
+                                resource.getFile(),
                                 MediaType.parse("application/vnd.openxmlformats-officedocument.wordprocessingml.document")
                         )
                 )
@@ -41,7 +41,7 @@ public class PspdfkitFilesConverterClient implements FileConverter {
                         new JSONObject()
                                 .put("parts", new JSONArray()
                                         .put(new JSONObject()
-                                                .put("file", "document")
+                                                .put("file", resource.getFilename())
                                         )
                                 ).toString()
                 )

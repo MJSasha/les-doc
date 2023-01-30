@@ -2,6 +2,7 @@ package com.mjsasha.lesdoc.services;
 
 import com.mjsasha.lesdoc.TestData;
 import com.mjsasha.lesdoc.configs.ExternalApiProperties;
+import com.mjsasha.lesdoc.data.definitions.FormatsForConvertingToPdf;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -17,6 +18,10 @@ class PspdfkitFilesConverterClientTest {
 
     @Test
     void convertDocxToPdf() throws IOException, JSONException {
+        Mockito.when(externalApiProperties.getApiKey()).thenReturn("pdf_live_8FsHgDr733zVimwUDOBy1KUjprqiPGVhm6yrNn0urAF");
+
+        System.out.println(FormatsForConvertingToPdf.DOCX.getPostfix());
+
         var result = pspdfkitFilesConverterClient.convertToPdf(TestData.MOCK_FILE.getResource());
 
         assertEquals(result.getFile().getName(), TestData.EXISTING_FILE.getOriginalFilename());
