@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import UploadService from "../services/FileUploadService";
-import IFile from "../types/types";
+import UploadService from "../../services/FileUploadService";
+import IFile from "../../types/FileInterface";
 
 const FileUpload: React.FC = () => {
     const [currentFile, setCurrentFile] = useState<File>();
