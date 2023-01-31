@@ -3826,6 +3826,11 @@ wildcard@^2.0.0:
   resolved "https://registry.yarnpkg.com/wildcard/-/wildcard-2.0.0.tgz#a77d20e5200c6faaac979e4b3aadc7b3dd7f8fec"
   integrity sha512-JcKqAHLPxcdb9KM49dufGXn2x3ssnfjbcaQdLlfZsL9rH9wgDQjUtDxbo8NE0F6SFvydeu1VhZe7hZuHsB2/pw==
 
+wrapper@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/wrapper/-/wrapper-0.1.0.tgz#23a8f573ca790af2b75fc403f88c937ac6e36492"
+  integrity sha512-pLwit5GogBCpAW16T6mmP8JtFlBFa9YuDVjtLK35On1Qfdp+js0Ng5IaDtcW7dZWR0KRKFQBE63BL21fHPx/4Q==
+
 wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"

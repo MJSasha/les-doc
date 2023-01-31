@@ -1,32 +1,44 @@
-import React, {useState, useEffect} from "react";
-import CreateLessonService from "../../services/CreateLessonService";
+import React, {Dispatch, SetStateAction, useState} from "react";
+import LessonService from "../../services/LessonService";
 
 import ILesson from "../../types/LessonInterface";
+import IUpdateListOfLessons from "../../types/CreateLessonPropsInterface";
 
-const CreateLesson: React.FC = () => {
+
+const CreateLesson: React.FC<IUpdateListOfLessons> = ({setUpdateListOfLessons, updateListOfLessons}) => {
     const [visible, setVisible] = useState<boolean>(false);
-    const [lesson, setLesson] = useState<ILesson>({name: ""})
+    const [lesson, setLesson] = useState<ILesson>({name: ""});
 
-    const PostCreatedLesson = () => {
-        CreateLessonService.PostCreatedLesson({
-            name:lesson.name
+    const PostCreatedLessonHandler = () => {
+        LessonService.PostCreatedLesson({
+            name: lesson.name
         })
             .then(res => {
-                    console.log(res)
+                    setUpdateListOfLessons(!updateListOfLessons)
                 }
             )
             .catch(err => {
                     console.log(err)
                 }
             )
+        setLesson({name: ""})
     }
     return (
         <>
-            <input type="text" value={lesson.name} onChange={(e) => {
-                setLesson({name: e.target.value})
-            }}/>
-            <button onClick={PostCreatedLesson}>Create Lesson</button>
-            {lesson.name}
+            <button onClick={() => {
+                setVisible(!visible)
+            }}>+
+            </button>
+            {visible ?
+                <>
+                    <input type="text" value={lesson.name} onChange={(e) => {
+                        setLesson({name: e.target.value})
+                    }}/>
+                    <button onClick={PostCreatedLessonHandler}>Create Lesson</button>
+                </>
+                :
+                null
+            }
         </>
     )
 }

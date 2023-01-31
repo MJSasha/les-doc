@@ -1,14 +1,29 @@
 // React imports
-import React from "react";
+import React, {useState, useEffect, Dispatch, SetStateAction} from "react";
 // Style imports
 import "./App.css";
 // Components imports
 import FileUpload from "./Components/Fileupload/FileUpload";
 import CreateLesson from "./Components/CreateLesson/CreateLesson";
 // Services imports
-import GetAllLessonsService from "./services/GetAllLessonsService";
+import LessonService from "./services/LessonService";
+// Types imports
+import ILesson from "./types/LessonInterface";
 
 const App = () => {
+    const [updateListOfLessonsByCreate, setUpdateListOfLessonsByCreate] = useState<boolean>(true);
+    const [listOfLessons, setListOfLessons] = useState<ILesson[]>([]);
+
+    useEffect(() => {
+        LessonService.GetAllLessons()
+            .then(res => {
+                    setListOfLessons(res.data)
+                }
+            )
+            .catch(err => {
+                console.log(err)
+            })
+    }, [updateListOfLessonsByCreate])
 
     return (
         <>
@@ -19,34 +34,35 @@ const App = () => {
                     <span className="fs-4">LesDoc</span>
                 </a>
                 <hr/>
-                <CreateLesson/>
+                <CreateLesson setUpdateListOfLessons={setUpdateListOfLessonsByCreate}
+                              updateListOfLessons={updateListOfLessonsByCreate}/>
                 <hr/>
                 <ul className="nav nav-pills flex-column mb-auto">
-                    <li className="nav-item">
-                        <a href="#" className="nav-link active" aria-current="page">
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link text-white">
-                            Dashboard
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link text-white">
-                            Orders
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link text-white">
-                            Products
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link text-white">
-                            Customers
-                        </a>
-                    </li>
+                    {listOfLessons &&
+                        listOfLessons.map((lesson, index) => {
+                            return <li key={index} className="nav-item mb-2">
+                                <a href="#" className="nav-link text-white active">{lesson.name}</a>
+                                <button onClick={() => {
+                                    LessonService.DeleteLesson(lesson.id)
+                                        .then(() => {
+                                                LessonService.GetAllLessons()
+                                                    .then(res => {
+                                                            setListOfLessons(res.data)
+                                                        }
+                                                    )
+                                                    .catch(err => {
+                                                        console.log(err)
+                                                    })
+                                            }
+                                        )
+                                        .catch(err => {
+                                            console.log(err)
+                                        })
+                                }}>x
+                                </button>
+                            </li>
+                        })
+                    }
                 </ul>
             </div>
         </>
