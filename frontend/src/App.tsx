@@ -1,10 +1,9 @@
 // React imports
-import React, {useState, useEffect, Dispatch, SetStateAction} from "react";
+import React, {useEffect, useState} from "react";
 // Style imports
 import "./App.css";
 // Components imports
-import FileUpload from "./Components/Fileupload/FileUpload";
-import CreateLesson from "./Components/CreateLesson/CreateLesson";
+import CreateLessonForm from "./Components/CreateLessonForm/CreateLessonForm";
 // Services imports
 import LessonService from "./services/LessonService";
 // Types imports
@@ -12,6 +11,7 @@ import ILesson from "./types/LessonInterface";
 
 const App = () => {
     const [lessonsList, setLessonsList] = useState<ILesson[]>([]);
+    const [visible, setVisible] = useState<boolean>(false);
 
     useEffect(() => {
         LessonService.GetAll()
@@ -22,9 +22,9 @@ const App = () => {
             .catch(err => {
                 console.log(err)
             })
-    },[])
+    }, [])
 
-   const UpdateLessonsList = () => {
+    const UpdateLessonsList = () => {
         LessonService.GetAll()
             .then(res => {
                     setLessonsList(res.data)
@@ -37,6 +37,9 @@ const App = () => {
 
     return (
         <>
+            {visible &&
+                <CreateLessonForm UpdateLessonList={UpdateLessonsList} setVisible={setVisible} visible={visible}/>
+            }
             <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
                  style={{width: "280px", height: "100%"}}>
                 <a href="/"
@@ -44,7 +47,10 @@ const App = () => {
                     <span className="fs-4">LesDoc</span>
                 </a>
                 <hr/>
-                <CreateLesson UpdateLessonList={UpdateLessonsList}/>
+                <button onClick={() => {
+                    setVisible(!visible)
+                }}>+
+                </button>
                 <hr/>
                 <ul className="nav nav-pills flex-column mb-auto">
                     {lessonsList &&
