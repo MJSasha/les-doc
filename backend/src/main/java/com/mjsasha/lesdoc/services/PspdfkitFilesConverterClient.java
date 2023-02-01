@@ -1,19 +1,20 @@
 package com.mjsasha.lesdoc.services;
 
 import com.mjsasha.lesdoc.configs.ExternalApiProperties;
+import com.mjsasha.lesdoc.data.definitions.FormatsForConvertingToPdf;
 import com.mjsasha.lesdoc.interfaces.FileConverter;
+import com.mjsasha.lesdoc.utils.Utils;
 import okhttp3.*;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.Path;
 
 @Service
 public class PspdfkitFilesConverterClient implements FileConverter {
@@ -26,14 +27,20 @@ public class PspdfkitFilesConverterClient implements FileConverter {
 
     public Resource convertToPdf(Resource resource) throws JSONException, IOException {
 
+        var fileExtension = Utils.getFileExtension(resource.getFilename());
+
+        if (fileExtension.isEmpty() || Files.notExists(Path.of(resource.getFilename())))
+            throw new FileNotFoundException("Incorrect file format");
+        FormatsForConvertingToPdf fileFormat = FormatsForConvertingToPdf.valueOf(fileExtension.get());
+
         final RequestBody body = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart(
                         resource.getFilename(),
-                        resource.getFile().getName(),
+                        resource.getFilename(),
                         RequestBody.create(
                                 resource.getFile(),
-                                MediaType.parse("application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                                MediaType.parse(fileFormat.getPspdfkitMediaTypeName())
                         )
                 )
                 .addFormDataPart(
@@ -59,15 +66,16 @@ public class PspdfkitFilesConverterClient implements FileConverter {
 
         final Response response = client.newCall(request).execute();
 
-        if (response.isSuccessful()) {
-            Files.copy(
-                    response.body().byteStream(),
-                    FileSystems.getDefault().getPath("result.pdf"),
-                    StandardCopyOption.REPLACE_EXISTING
-            );
-            return new ByteArrayResource(response.body().bytes());
-        } else {
-            throw new IOException(response.body().string());
-        }
+//        if (response.isSuccessful()) {
+//            Files.copy(
+//                    response.body().byteStream(),
+//                    FileSystems.getDefault().getPath("result.pdf"),
+//                    StandardCopyOption.REPLACE_EXISTING
+//            );
+//            return new ByteArrayResource(response.body().bytes());
+//        } else {
+//            throw new IOException(response.body().string());
+//        }
+        return null;
     }
 }

@@ -27,6 +27,6 @@ public enum FormatsForConvertingToPdf {
     }
 
     public String getPostfix() {
-        return "." + toString().toLowerCase();
+        return toString().toLowerCase();
     }
 }
