@@ -11,19 +11,29 @@ import LessonService from "./services/LessonService";
 import ILesson from "./types/LessonInterface";
 
 const App = () => {
-    const [updateListOfLessonsByCreate, setUpdateListOfLessonsByCreate] = useState<boolean>(true);
-    const [listOfLessons, setListOfLessons] = useState<ILesson[]>([]);
+    const [lessonsList, setLessonsList] = useState<ILesson[]>([]);
 
     useEffect(() => {
-        LessonService.GetAllLessons()
+        LessonService.GetAll()
             .then(res => {
-                    setListOfLessons(res.data)
+                    setLessonsList(res.data)
                 }
             )
             .catch(err => {
                 console.log(err)
             })
-    }, [updateListOfLessonsByCreate])
+    },[])
+
+   const UpdateLessonsList = () => {
+        LessonService.GetAll()
+            .then(res => {
+                    setLessonsList(res.data)
+                }
+            )
+            .catch(err => {
+                console.log(err)
+            })
+    }
 
     return (
         <>
@@ -34,25 +44,17 @@ const App = () => {
                     <span className="fs-4">LesDoc</span>
                 </a>
                 <hr/>
-                <CreateLesson setUpdateListOfLessons={setUpdateListOfLessonsByCreate}
-                              updateListOfLessons={updateListOfLessonsByCreate}/>
+                <CreateLesson UpdateLessonList={UpdateLessonsList}/>
                 <hr/>
                 <ul className="nav nav-pills flex-column mb-auto">
-                    {listOfLessons &&
-                        listOfLessons.map((lesson, index) => {
+                    {lessonsList &&
+                        lessonsList.map((lesson, index) => {
                             return <li key={index} className="nav-item mb-2">
                                 <a href="#" className="nav-link text-white active">{lesson.name}</a>
                                 <button onClick={() => {
-                                    LessonService.DeleteLesson(lesson.id)
+                                    LessonService.Delete(lesson.id)
                                         .then(() => {
-                                                LessonService.GetAllLessons()
-                                                    .then(res => {
-                                                            setListOfLessons(res.data)
-                                                        }
-                                                    )
-                                                    .catch(err => {
-                                                        console.log(err)
-                                                    })
+                                                UpdateLessonsList()
                                             }
                                         )
                                         .catch(err => {

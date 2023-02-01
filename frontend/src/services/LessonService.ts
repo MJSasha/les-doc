@@ -2,7 +2,7 @@ import axios from "axios";
 import {url} from "../Constants/Constants";
 import ILesson from "../types/LessonInterface";
 
-const PostCreatedLesson = (lesson: ILesson): Promise<any> => {
+const Create = (lesson: ILesson): Promise<any> => {
 
     let formdata = new FormData();
     formdata.append("name", lesson.name);
@@ -10,18 +10,18 @@ const PostCreatedLesson = (lesson: ILesson): Promise<any> => {
     return axios.post(url + 'lessons', formdata);
 };
 
-const GetAllLessons = (): Promise<any> => {
+const GetAll = (): Promise<any> => {
     return axios.get(url + 'lessons');
 };
 
-const DeleteLesson = (id: number | undefined): Promise<any> => {
+const Delete = (id: number | undefined): Promise<any> => {
     return axios.delete(url + 'lessons/' + id)
 }
 
 const LessonService = {
-    PostCreatedLesson,
-    GetAllLessons,
-    DeleteLesson
+    Create: Create,
+    GetAll: GetAll,
+    Delete: Delete
 };
 
 export default LessonService;

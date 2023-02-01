@@ -5,16 +5,16 @@ import ILesson from "../../types/LessonInterface";
 import IUpdateListOfLessons from "../../types/CreateLessonPropsInterface";
 
 
-const CreateLesson: React.FC<IUpdateListOfLessons> = ({setUpdateListOfLessons, updateListOfLessons}) => {
+const CreateLesson: React.FC<IUpdateListOfLessons> = ({UpdateLessonList}) => {
     const [visible, setVisible] = useState<boolean>(false);
     const [lesson, setLesson] = useState<ILesson>({name: ""});
 
-    const PostCreatedLessonHandler = () => {
-        LessonService.PostCreatedLesson({
+    const CreateHandler = () => {
+        LessonService.Create({
             name: lesson.name
         })
             .then(res => {
-                    setUpdateListOfLessons(!updateListOfLessons)
+                    UpdateLessonList()
                 }
             )
             .catch(err => {
@@ -34,7 +34,7 @@ const CreateLesson: React.FC<IUpdateListOfLessons> = ({setUpdateListOfLessons, u
                     <input type="text" value={lesson.name} onChange={(e) => {
                         setLesson({name: e.target.value})
                     }}/>
-                    <button onClick={PostCreatedLessonHandler}>Create Lesson</button>
+                    <button onClick={CreateHandler}>Create Lesson</button>
                 </>
                 :
                 null
