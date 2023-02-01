@@ -21,8 +21,10 @@ public class Lesson {
     private Integer id;
 
     @NotBlank
+    @Column(unique = true)
     private String name;
     @Schema(description = "If not specified, the lesson name is used")
+    @Column(unique = true)
     private String folderName;
     private String description;
 }
