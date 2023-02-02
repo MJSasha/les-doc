@@ -41,6 +41,7 @@ The API is deployed on port 8080, while SwaggerUI is available via the link [htt
 ### **Launching React App**
 
 ``` bash
+cd frontend
 yarn install
 yarn start
 ```

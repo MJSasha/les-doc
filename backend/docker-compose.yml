@@ -3,8 +3,8 @@ version: "3"
 services:
 
   backend:
-    image: mjsasha/backend:2.1.1
-    container_name: backend_2.1.1
+    image: mjsasha/backend:2.1.4
+    container_name: backend_2.1.4
     build: .
     depends_on:
       - db
@@ -12,19 +12,3 @@ services:
       - "8080:8080"
     environment:
       UPLOADED_FILES_FOLDER_PATH: /uploaded-files
-      POSTGRES_DB: les-doc
-      PSQL_HOST: db
-      PSQL_PORT: 5432
-      PSQL_USER: admin
-      PSQL_PASSWORD: admin
-
-  db:
-    image: postgres:14.2
-    container_name: db
-    restart: always
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: les-doc

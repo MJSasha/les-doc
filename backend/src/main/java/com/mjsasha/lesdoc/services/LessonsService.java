@@ -21,8 +21,8 @@ public class LessonsService {
     public void create(Lesson lesson) {
         if (lesson.getFolderName() == null) lesson.setFolderName(lesson.getName());
 
-        fileStorageService.createDirectory(lesson.getFolderName());
         lessonsRepository.save(lesson);
+        fileStorageService.createDirectory(lesson.getFolderName());
     }
 
     public Lesson read(Integer id) {

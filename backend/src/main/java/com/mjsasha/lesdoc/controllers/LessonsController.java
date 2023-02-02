@@ -3,6 +3,7 @@ package com.mjsasha.lesdoc.controllers;
 import com.mjsasha.lesdoc.data.entities.Lesson;
 import com.mjsasha.lesdoc.services.LessonsService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +21,9 @@ public class LessonsController {
 
     @Operation(summary = "Used to create a lesson")
     @PostMapping
-    public void create(Lesson lesson) {
+    public ResponseEntity<String> create(@RequestBody Lesson lesson) {
         lessonsService.create(lesson);
+        return ResponseEntity.ok("Lesson with name: " + lesson.getName() + ", with folder name: " + lesson.getFolderName() + ", successfully created.");
     }
 
     @Operation(summary = "Used to read all lessons")
@@ -38,7 +40,8 @@ public class LessonsController {
 
     @Operation(summary = "Used to delete a lesson")
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
         lessonsService.delete(id);
+        return ResponseEntity.ok("Lesson successfully deleted.");
     }
 }
