@@ -38,7 +38,7 @@ public class PspdfkitFilesConverterClient implements FileConverter {
         final RequestBody body = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart(
-                        Utils.getFileNameWithOutExtension(resource.getFilename()),
+                        resource.getFilename(),
                         resource.getFilename(),
                         RequestBody.create(
                                 resource.getFile(),
