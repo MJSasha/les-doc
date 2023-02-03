@@ -4,10 +4,9 @@ import LessonService from "../../services/LessonService";
 import ModalWindow from "../ModalWindow/ModalWindow";
 
 import ILesson from "../../types/LessonInterface";
-import IUpdateListOfLessons from "../../types/CreateLessonFormPropsInterface";
+import IUpdateListOfLessons from "../../types/PropsTypes/CreateLessonFormPropsInterface";
 
-const CreateLessonForm: React.FC<IUpdateListOfLessons> = ({UpdateLessonList, setVisible, visible}) => {
-
+const CreateLessonForm: React.FC<IUpdateListOfLessons> = ({UpdateLessonsList, setVisible, visible}) => {
     const [lesson, setLesson] = useState<ILesson>({name: ""});
 
     const CreateHandler = () => {
@@ -15,7 +14,7 @@ const CreateLessonForm: React.FC<IUpdateListOfLessons> = ({UpdateLessonList, set
             name: lesson.name
         })
             .then(() => {
-                    UpdateLessonList()
+                    UpdateLessonsList()
                     setVisible(false)
                 }
             )
@@ -27,13 +26,12 @@ const CreateLessonForm: React.FC<IUpdateListOfLessons> = ({UpdateLessonList, set
     }
     const GetModalContent = () => {
         return (
-            <>
-                <input type="text" value={lesson.name} onChange={(e) => {
+            <div className="container d-flex flex-column justify-content-evenly h-100">
+                <input className="form-control" type="text" value={lesson.name} onChange={(e) => {
                     setLesson({name: e.target.value})
                 }}/>
-                <button onClick={CreateHandler}>Create Lesson</button>
-
-            </>
+                <button type="button" className="btn btn-primary" onClick={CreateHandler}>Create Lesson</button>
+            </div>
         )
     }
     return (

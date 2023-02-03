@@ -11,6 +11,16 @@
     justify-content: center;
 }
 
-.modal-dialog {
+.modal_content_wrapper_zone {
     background: white;
+    width: 330px !important;
+    height: 160px;
+    border: black;
+    border-radius: 15px;
+}
+.modal_content_zone{
+    height: 100%;
+}
+.modal_body_wrapper{
+
 }
