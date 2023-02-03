@@ -1,6 +1,6 @@
 export default interface ILesson {
     id?: number,
-    "name": string,
+    name: string,
     folderName?: string,
     description?: string
 

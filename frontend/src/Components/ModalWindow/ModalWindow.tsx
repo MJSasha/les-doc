@@ -5,7 +5,7 @@ import IModalContent from "../../types/PropsTypes/ModalWindowPropsInterface";
 
 import './ModalWindow.css'
 
-const ModalWindow: React.FC<IModalContent> = ({GetModalContent, setVisible, visible}) => {
+const ModalWindow: React.FC<IModalContent> = ({getModalContent, setVisible, visible}) => {
     const modalRef = useRef(null);
 
     useOnClickOutside(modalRef, () => setVisible(false));
@@ -22,7 +22,7 @@ const ModalWindow: React.FC<IModalContent> = ({GetModalContent, setVisible, visi
                                 aria-label="Закрыть"></button>
                     </div>
                     <div className="modal-body">
-                        {GetModalContent()}
+                        {getModalContent()}
                     </div>
                     {/*<div className="modal-footer">*/}
 

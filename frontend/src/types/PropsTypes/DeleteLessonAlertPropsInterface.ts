@@ -1,7 +1,7 @@
 import {Dispatch, SetStateAction} from "react";
 
 export default interface IDeleteLessonAlert {
-    UpdateLessonsList: () => void,
+    updateLessonsList: () => void,
     currentDeletingLessonId?: number | undefined,
     setVisible: Dispatch<SetStateAction<boolean>>,
     visible: boolean

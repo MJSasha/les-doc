@@ -4,7 +4,7 @@ import IDeleteLessonAlert from "../../types/PropsTypes/DeleteLessonAlertPropsInt
 import ModalWindow from "../ModalWindow/ModalWindow";
 
 const DeleteLessonAlert: React.FC<IDeleteLessonAlert> = ({
-                                                             UpdateLessonsList,
+                                                             updateLessonsList,
                                                              currentDeletingLessonId,
                                                              setVisible,
                                                              visible
@@ -14,7 +14,7 @@ const DeleteLessonAlert: React.FC<IDeleteLessonAlert> = ({
     const DeleteHandler = (id: number | undefined) => {
         LessonService.Delete(id)
             .then(() => {
-                    UpdateLessonsList()
+                    updateLessonsList()
                     setVisible(false)
                 }
             )
@@ -36,7 +36,7 @@ const DeleteLessonAlert: React.FC<IDeleteLessonAlert> = ({
 
     return (
         <>
-            <ModalWindow GetModalContent={GetModalContent} setVisible={setVisible} visible={visible}/>
+            <ModalWindow getModalContent={GetModalContent} setVisible={setVisible} visible={visible}/>
         </>
     )
 }

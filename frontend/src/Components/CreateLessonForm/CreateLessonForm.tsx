@@ -6,7 +6,7 @@ import ModalWindow from "../ModalWindow/ModalWindow";
 import ILesson from "../../types/LessonInterface";
 import IUpdateListOfLessons from "../../types/PropsTypes/CreateLessonFormPropsInterface";
 
-const CreateLessonForm: React.FC<IUpdateListOfLessons> = ({UpdateLessonsList, setVisible, visible}) => {
+const CreateLessonForm: React.FC<IUpdateListOfLessons> = ({updateLessonsList, setVisible, visible}) => {
     const [lesson, setLesson] = useState<ILesson>({name: ""});
 
     const CreateHandler = () => {
@@ -14,7 +14,7 @@ const CreateLessonForm: React.FC<IUpdateListOfLessons> = ({UpdateLessonsList, se
             name: lesson.name
         })
             .then(() => {
-                    UpdateLessonsList()
+                    updateLessonsList()
                     setVisible(false)
                 }
             )
@@ -36,7 +36,7 @@ const CreateLessonForm: React.FC<IUpdateListOfLessons> = ({UpdateLessonsList, se
     }
     return (
         <>
-            <ModalWindow GetModalContent={GetModalContent} setVisible={setVisible} visible={visible}/>
+            <ModalWindow getModalContent={GetModalContent} setVisible={setVisible} visible={visible}/>
         </>
     )
 }

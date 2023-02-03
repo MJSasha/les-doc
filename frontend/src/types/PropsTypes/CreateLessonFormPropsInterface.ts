@@ -1,7 +1,7 @@
 import {Dispatch, SetStateAction} from "react";
 
 export default interface IUpdateListOfLessons {
-    UpdateLessonsList: () => void,
+    updateLessonsList: () => void,
     setVisible: Dispatch<SetStateAction<boolean>>,
     visible: boolean
 }

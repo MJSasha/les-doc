@@ -20,14 +20,7 @@ const App = () => {
     const [currentDeletingLessonId, setCurrentDeletingLessonId] = useState<number | undefined>();
 
     useEffect(() => {
-        LessonService.GetAll()
-            .then(res => {
-                    setLessonsList(res.data)
-                }
-            )
-            .catch(err => {
-                console.log(err)
-            })
+        UpdateLessonsList()
     }, [])
 
     const UpdateLessonsList = () => {
@@ -45,11 +38,11 @@ const App = () => {
     return (
         <>
             {createLessonFormVisibility &&
-                <CreateLessonForm UpdateLessonsList={UpdateLessonsList} setVisible={setCreateLessonFormVisibility}
+                <CreateLessonForm updateLessonsList={UpdateLessonsList} setVisible={setCreateLessonFormVisibility}
                                   visible={createLessonFormVisibility}/>
             }
             {deleteLessonAlertVisibility &&
-                <DeleteLessonAlert UpdateLessonsList={UpdateLessonsList}
+                <DeleteLessonAlert updateLessonsList={UpdateLessonsList}
                                    currentDeletingLessonId={currentDeletingLessonId}
                                    setVisible={setDeleteLessonAlertVisibility} visible={deleteLessonAlertVisibility}/>
             }
