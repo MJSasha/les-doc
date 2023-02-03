@@ -12,4 +12,8 @@ public class Utils {
                 .filter(f -> f.contains("."))
                 .map(f -> f.substring(filename.lastIndexOf(".") + 1));
     }
+
+    public static String getFileNameWithOutExtension(String filename) {
+        return filename.replaceFirst("[.][^.]+$", "");
+    }
 }

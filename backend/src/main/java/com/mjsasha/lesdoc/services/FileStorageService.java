@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -55,6 +56,10 @@ public class FileStorageService {
         } catch (IOException ex) {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
         }
+    }
+
+    public void storeFile(InputStream stream, String folderName) throws IOException {
+        Files.copy(stream, fileStorageLocation.resolve(folderName), StandardCopyOption.REPLACE_EXISTING);
     }
 
     public Resource loadFileAsResource(String fileName, String folderName) {

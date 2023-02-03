@@ -13,30 +13,32 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 @Service
 public class PspdfkitFilesConverterClient implements FileConverter {
 
+    private static final String DIRECTORY_FOR_CONVERTED_FILES = "converted";
     private final ExternalApiProperties externalApiProperties;
+    private final FileStorageService fileStorageService;
 
-    public PspdfkitFilesConverterClient(ExternalApiProperties externalApiProperties) {
+    public PspdfkitFilesConverterClient(ExternalApiProperties externalApiProperties, FileStorageService fileStorageService) {
         this.externalApiProperties = externalApiProperties;
+        this.fileStorageService = fileStorageService;
+
+        fileStorageService.createDirectory(DIRECTORY_FOR_CONVERTED_FILES);
     }
 
-    public Resource convertToPdf(Resource resource) throws JSONException, IOException {
+    public Resource convertToPdf(Resource resource) throws IOException, JSONException {
 
         var fileExtension = Utils.getFileExtension(resource.getFilename());
 
-        if (fileExtension.isEmpty() || Files.notExists(Path.of(resource.getFilename())))
-            throw new FileNotFoundException("Incorrect file format");
-        FormatsForConvertingToPdf fileFormat = FormatsForConvertingToPdf.valueOf(fileExtension.get());
+        if (fileExtension.isEmpty()) throw new FileNotFoundException("Incorrect file format");
+        FormatsForConvertingToPdf fileFormat = FormatsForConvertingToPdf.valueOf(fileExtension.get().toUpperCase());
 
         final RequestBody body = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart(
-                        resource.getFilename(),
+                        Utils.getFileNameWithOutExtension(resource.getFilename()),
                         resource.getFilename(),
                         RequestBody.create(
                                 resource.getFile(),
@@ -66,16 +68,15 @@ public class PspdfkitFilesConverterClient implements FileConverter {
 
         final Response response = client.newCall(request).execute();
 
-//        if (response.isSuccessful()) {
-//            Files.copy(
-//                    response.body().byteStream(),
-//                    FileSystems.getDefault().getPath("result.pdf"),
-//                    StandardCopyOption.REPLACE_EXISTING
-//            );
-//            return new ByteArrayResource(response.body().bytes());
-//        } else {
-//            throw new IOException(response.body().string());
-//        }
-        return null;
+        if (response.isSuccessful()) {
+            var fileName = Utils.getFileNameWithOutExtension(resource.getFilename()) + ".pdf";
+            fileStorageService.storeFile(response.body().byteStream(), DIRECTORY_FOR_CONVERTED_FILES + "/" + fileName);
+            return fileStorageService.loadFileAsResource(
+                    Utils.getFileNameWithOutExtension(resource.getFilename()) + ".pdf",
+                    DIRECTORY_FOR_CONVERTED_FILES
+            );
+        } else {
+            throw new IOException(response.body().string());
+        }
     }
 }
