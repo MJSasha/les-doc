@@ -35,6 +35,11 @@ The API is launched using Docker. The API image is uploaded to [DockerHub]([http
 ``` bash
 docker-compose up
 ```
+For update use
+
+``` bash
+docker-compose up -d
+```
 
 The API is deployed on port 8080, while SwaggerUI is available via the link [http://localhost:8080/api/swagger-ui.html](http://localhost:8080/api/swagger-ui.html).
 
