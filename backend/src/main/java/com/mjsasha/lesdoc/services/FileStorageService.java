@@ -101,4 +101,12 @@ public class FileStorageService {
             throw new FileStorageException("Could note remove directory", ex);
         }
     }
+
+    public void removeFile(String fileName, String folderName) {
+        try {
+            Files.delete(fileStorageLocation.resolve(folderName).resolve(fileName));
+        } catch (IOException ex) {
+            throw new FileStorageException("Could note remove file " + fileName, ex);
+        }
+    }
 }

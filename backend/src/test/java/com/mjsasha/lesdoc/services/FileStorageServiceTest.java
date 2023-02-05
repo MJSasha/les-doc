@@ -1,6 +1,5 @@
 package com.mjsasha.lesdoc.services;
 
-import com.mjsasha.lesdoc.TestData;
 import com.mjsasha.lesdoc.configs.FileStorageProperties;
 import com.mjsasha.lesdoc.exceptions.FileNotFoundException;
 import com.mjsasha.lesdoc.exceptions.FileStorageException;
@@ -17,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
+import static com.mjsasha.lesdoc.TestData.*;
 import static org.apache.tomcat.util.http.fileupload.FileUtils.deleteDirectory;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,10 +40,7 @@ class FileStorageServiceTest {
         Files.createDirectories(TEST_DIRECTORY_LOCATION);
 
         Files.createDirectory(TEST_DIRECTORY_LOCATION.resolve(NOT_EMPTY_DIRECTORY_NAME));
-        Files.copy(TestData.EXISTING_FILE.getInputStream(),
-                TEST_DIRECTORY_LOCATION
-                        .resolve(NOT_EMPTY_DIRECTORY_NAME)
-                        .resolve(TestData.EXISTING_FILE.getOriginalFilename()));
+        createTestFile();
     }
 
     @AfterAll
@@ -58,26 +55,33 @@ class FileStorageServiceTest {
         Files.delete(TEST_DIRECTORY_LOCATION);
     }
 
+    static void createTestFile() throws IOException {
+        Files.copy(EXISTING_FILE.getInputStream(),
+                TEST_DIRECTORY_LOCATION
+                        .resolve(NOT_EMPTY_DIRECTORY_NAME)
+                        .resolve(EXISTING_FILE.getOriginalFilename()));
+    }
+
     @Test
     void storeFileWithIncorrectName() {
         assertThrows(FileStorageException.class,
-                () -> fileStorageService.storeFile(TestData.INVALID_MOCK_FILE, "not-matter"));
+                () -> fileStorageService.storeFile(INVALID_MOCK_FILE, "not-matter"));
     }
 
     @Test
     void storeFileToNotExistingFolder() {
         assertThrows(FileStorageException.class,
-                () -> fileStorageService.storeFile(TestData.MOCK_FILE, "not-exist"));
+                () -> fileStorageService.storeFile(MOCK_FILE, "not-exist"));
     }
 
     @Test
     void storeFileToExistingFolder() {
-        String storedFileName = fileStorageService.storeFile(TestData.MOCK_FILE, NOT_EMPTY_DIRECTORY_NAME);
+        String storedFileName = fileStorageService.storeFile(MOCK_FILE, NOT_EMPTY_DIRECTORY_NAME);
 
-        assertEquals(storedFileName, TestData.MOCK_FILE.getOriginalFilename());
+        assertEquals(storedFileName, MOCK_FILE.getOriginalFilename());
         assertTrue(Files.exists(TEST_DIRECTORY_LOCATION
                 .resolve(NOT_EMPTY_DIRECTORY_NAME)
-                .resolve(TestData.MOCK_FILE.getOriginalFilename())));
+                .resolve(MOCK_FILE.getOriginalFilename())));
     }
 
     @Test
@@ -94,15 +98,15 @@ class FileStorageServiceTest {
 
     @Test
     void loadExistingResource() throws IOException {
-        Resource resource = fileStorageService.loadFileAsResource(TestData.EXISTING_FILE.getOriginalFilename(), NOT_EMPTY_DIRECTORY_NAME);
+        Resource resource = fileStorageService.loadFileAsResource(EXISTING_FILE.getOriginalFilename(), NOT_EMPTY_DIRECTORY_NAME);
 
-        assertEquals(resource.getFile().getName(), TestData.EXISTING_FILE.getOriginalFilename());
+        assertEquals(resource.getFile().getName(), EXISTING_FILE.getOriginalFilename());
     }
 
     @Test
     void storeFileIncorrectFileName() {
         assertThrows(FileStorageException.class,
-                () -> fileStorageService.storeFile(TestData.INVALID_MOCK_FILE, "not matter"));
+                () -> fileStorageService.storeFile(INVALID_MOCK_FILE, "not matter"));
     }
 
     @Test
@@ -124,7 +128,7 @@ class FileStorageServiceTest {
     void getFilenamesFromNotEmptyFolder() throws IOException {
         String[] allFilesNames = fileStorageService.getAllFilesNames(NOT_EMPTY_DIRECTORY_NAME);
 
-        assertTrue(Arrays.stream(allFilesNames).anyMatch(name -> name.equals(TestData.EXISTING_FILE.getOriginalFilename())));
+        assertTrue(Arrays.stream(allFilesNames).anyMatch(name -> name.equals(EXISTING_FILE.getOriginalFilename())));
     }
 
     @Test
@@ -157,6 +161,27 @@ class FileStorageServiceTest {
     @Test
     void removeNotExistingDirectory() {
         assertThrows(FileStorageException.class,
-                () -> fileStorageService.removeDirectory("note-existing-directory"));
+                () -> fileStorageService.removeDirectory("not-existing-directory"));
+    }
+
+    @Test
+    void removeNotExistingFile() {
+        assertThrows(FileStorageException.class,
+                () -> fileStorageService.removeFile(NOT_EMPTY_DIRECTORY_NAME, "not-existing-file"));
+    }
+
+    @Test
+    void removeFromNotExistingDirectory() {
+        assertThrows(FileStorageException.class,
+                () -> fileStorageService.removeFile("not-existing-directory", "not matter"));
+    }
+
+    @Test
+    void removeExistingFile() throws IOException {
+        fileStorageService.removeFile(EXISTING_FILE.getOriginalFilename(), NOT_EMPTY_DIRECTORY_NAME);
+
+        assertTrue(Files.notExists(TEST_DIRECTORY_LOCATION.resolve(NOT_EMPTY_DIRECTORY_NAME).resolve(EXISTING_FILE.getOriginalFilename())));
+
+        createTestFile();
     }
 }

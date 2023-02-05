@@ -87,4 +87,11 @@ public class FilesController {
         Lesson lesson = lessonsService.read(lessonId);
         return fileStorageService.getAllFilesNames(lesson.getFolderName());
     }
+
+    @Operation(summary = "Use to delete file")
+    @DeleteMapping
+    public void deleteFile(@RequestParam String fileName, @RequestParam Integer lessonId) {
+        var lesson = lessonsService.read(lessonId);
+        fileStorageService.removeFile(fileName, lesson.getFolderName());
+    }
 }
