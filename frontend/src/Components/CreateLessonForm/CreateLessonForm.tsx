@@ -26,12 +26,27 @@ const CreateLessonForm: React.FC<IUpdateListOfLessons> = ({updateLessonsList, se
     }
     const GetModalContent = () => {
         return (
-            <div className="container d-flex flex-column justify-content-evenly h-100">
-                <input className="form-control" type="text" value={lesson.name} onChange={(e) => {
-                    setLesson({name: e.target.value})
-                }}/>
-                <button type="button" className="btn btn-primary" onClick={CreateHandler}>Create Lesson</button>
-            </div>
+            <>
+                <div className="modal-header container d-flex flex-row justify-content-between pt-2 px-3">
+                    <h5 className="modal-title">Creating lesson</h5>
+                    <button onClick={() => {
+                        setVisible(false)
+                    }} type="button" className="btn-close"
+                            aria-label="Закрыть"></button>
+                </div>
+                <div className="modal-body">
+                    <div className="d-flex flex-column justify-content-center h-100 p-3">
+                        <input className="form-control" type="text" value={lesson.name} onChange={(e) => {
+                            setLesson({name: e.target.value})
+                        }}/>
+                    </div>
+                </div>
+                <div className="modal-footer">
+                    <div className="pb-2 pe-3">
+                        <button type="button" className="btn btn-primary" onClick={CreateHandler}>Create</button>
+                    </div>
+                </div>
+            </>
         )
     }
     return (

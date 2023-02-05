@@ -9,18 +9,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 9999;
 }
 
 .modal_content_wrapper_zone {
     background: white;
-    width: 330px !important;
-    height: 160px;
+    /*width: 330px !important;*/
+    /*height: 160px;*/
     border: black;
     border-radius: 15px;
 }
 .modal_content_zone{
     height: 100%;
 }
-.modal_body_wrapper{
-
+.modal-body{
+    min-width: 20vw;
+    min-height: 10vh;
 }

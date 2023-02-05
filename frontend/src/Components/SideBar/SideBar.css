@@ -1,0 +1,7 @@
+
+.custom__hover:hover{
+    background-color: rgba(13, 110, 253, 0.4)!important;
+}
+.custom__hover:focus{
+    background-color: rgba(13, 110, 253, 0.7) !important;
+}
