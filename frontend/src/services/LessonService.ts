@@ -3,11 +3,7 @@ import {url} from "../Constants/Constants";
 import ILesson from "../types/LessonInterface";
 
 const Create = (lesson: ILesson): Promise<any> => {
-
-    let formdata = new FormData();
-    formdata.append("name", lesson.name);
-
-    return axios.post(url + 'lessons', formdata);
+    return axios.post(url + 'lessons', lesson);
 };
 
 const GetAll = (): Promise<any> => {
