@@ -10,6 +10,8 @@ services:
       - db
     ports:
       - "8080:8080"
+    volumes:
+      - ./uploaded-files:/uploaded-files # Name like UPLOADED_FILES_FOLDER_PATH
     environment:
       UPLOADED_FILES_FOLDER_PATH: /uploaded-files
       POSTGRES_DB: les-doc
