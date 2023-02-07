@@ -9,7 +9,8 @@ import IUpdateListOfLessons from "../../types/PropsTypes/CreateLessonFormPropsIn
 const CreateLessonForm: React.FC<IUpdateListOfLessons> = ({updateLessonsList, setVisible, visible}) => {
     const [lesson, setLesson] = useState<ILesson>({name: ""});
 
-    const CreateHandler = () => {
+    const CreateHandler = (e: any) => {
+        e.preventDefault()
         LessonService.Create({
             name: lesson.name
         })
@@ -34,18 +35,20 @@ const CreateLessonForm: React.FC<IUpdateListOfLessons> = ({updateLessonsList, se
                     }} type="button" className="btn-close"
                             aria-label="Закрыть"></button>
                 </div>
-                <div className="modal-body">
-                    <div className="d-flex flex-column justify-content-center h-100 p-3">
-                        <input className="form-control" type="text" value={lesson.name} onChange={(e) => {
-                            setLesson({name: e.target.value})
-                        }}/>
+                <form onSubmit={CreateHandler}>
+                    <div className="modal-body">
+                        <div className="d-flex flex-column justify-content-center h-100 p-3">
+                            <input className="form-control" type="text" value={lesson.name} onChange={(e) => {
+                                setLesson({name: e.target.value})
+                            }}/>
+                        </div>
                     </div>
-                </div>
-                <div className="modal-footer">
-                    <div className="pb-2 pe-3">
-                        <button type="button" className="btn btn-primary" onClick={CreateHandler}>Create</button>
+                    <div className="modal-footer">
+                        <div className="pb-2 pe-3">
+                            <button type="submit" className="btn btn-primary">Create</button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </>
         )
     }

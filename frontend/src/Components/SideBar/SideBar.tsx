@@ -10,10 +10,10 @@ import LessonItem from "../LessonItem/LessonItem";
 import LessonService from "../../services/LessonService";
 // Types imports
 import ILesson from "../../types/LessonInterface";
+import ISideBar from "../../types/PropsTypes/SideBarPropsInterface";
 // img imports
-import delete_icon from "../../images/delete_icon.png";
 
-const SideBar: React.FC = () => {
+const SideBar: React.FC<ISideBar> = ({setCurrentLessonId, currentLessonId}) => {
     const [lessonsList, setLessonsList] = useState<ILesson[]>([]);
     const [createLessonFormVisibility, setCreateLessonFormVisibility] = useState<boolean>(false);
     const [deleteLessonAlertVisibility, setDeleteLessonAlertVisibility] = useState<boolean>(false);
@@ -48,7 +48,8 @@ const SideBar: React.FC = () => {
             }
             <div className="d-flex flex-column flex-shrink-0 text-white bg-dark"
                  style={{height: "100%"}}>
-                <div className="px-3 pt-lg-3">
+                <hr/>
+                <div className="px-3">
                     <button type="button" className="btn btn-primary create_lesson_btn fs-5 w-100" onClick={() => {
                         setCreateLessonFormVisibility(!createLessonFormVisibility)
                     }}>New
@@ -59,7 +60,12 @@ const SideBar: React.FC = () => {
                     {lessonsList &&
                         lessonsList.map((lesson, index) => {
                             return <li key={index} className="nav-item mb-2 w-100 px-3">
-                                <LessonItem lesson={lesson} setDeleteLessonAlertVisibility={setDeleteLessonAlertVisibility} deleteLessonAlertVisibility={deleteLessonAlertVisibility} setCurrentDeletingLessonId={setCurrentDeletingLessonId}/>
+                                <LessonItem lesson={lesson}
+                                            setDeleteLessonAlertVisibility={setDeleteLessonAlertVisibility}
+                                            deleteLessonAlertVisibility={deleteLessonAlertVisibility}
+                                            setCurrentDeletingLessonId={setCurrentDeletingLessonId}
+                                            setCurrentLessonId={setCurrentLessonId}
+                                            currentLessonId={currentLessonId}/>
                             </li>
                         })
                     }

@@ -1,9 +1,10 @@
 // React imports
-import React from "react";
+import React, {useEffect, useState} from "react";
 // Style imports
 import "./App.css";
 // Components imports
 import SideBar from "./Components/SideBar/SideBar";
+import FileUpload from "./Components/Fileupload/FileUpload";
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
@@ -13,7 +14,11 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import logo from "./images/logo.png";
 
 const App = () => {
+    const [currentLessonId, setCurrentLessonId] = useState<number | undefined>();
 
+    useEffect(() => {
+        console.log(currentLessonId)
+    },[currentLessonId])
 
     return (
         <>
@@ -42,13 +47,26 @@ const App = () => {
                             </Offcanvas.Title>
                         </Offcanvas.Header>
                         <Offcanvas.Body>
-                            <SideBar/>
+                            <SideBar setCurrentLessonId={setCurrentLessonId} currentLessonId={currentLessonId}/>
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>
                 </Container>
             </Navbar>
-            <div className="d-none d-md-block" style={{width: "280px", height: "100%"}}>
-                <SideBar/>
+            <div className="d-flex flex-row h-100">
+                <div className="d-none d-md-block" style={{width: "280px", height: "100%"}}>
+                    <SideBar setCurrentLessonId={setCurrentLessonId} currentLessonId={currentLessonId}/>
+                </div>
+                <div className="flex-fill">
+                    <div className="container py-3">
+                        {currentLessonId == undefined ?
+                            <div>
+                                Select a lesson to view files
+                            </div>
+                            :
+                            <FileUpload currentLessonId={currentLessonId}/>
+                        }
+                    </div>
+                </div>
             </div>
         </>
     );
