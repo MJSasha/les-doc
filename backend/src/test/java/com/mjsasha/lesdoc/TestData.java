@@ -13,7 +13,7 @@ public class TestData {
     public static final ArrayList<Lesson> NOT_EMPTY_LESSONS_LIST = new ArrayList<>(Arrays.asList(
             new Lesson(1, "First lesson", "First folder", "First description"),
             new Lesson(2, "Second lesson", "Second folder", "Second description"),
-            new Lesson(3, "Third lesson", "Third folder", "Third description")
+            new Lesson(3, "Third lesson", null, "Third description")
     ));
 
     public static final MultipartFile EXISTING_FILE = new MockMultipartFile(
