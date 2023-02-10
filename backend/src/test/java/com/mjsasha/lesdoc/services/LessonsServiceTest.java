@@ -6,14 +6,15 @@ import com.mjsasha.lesdoc.repositories.LessonsRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import static org.mockito.Mockito.verify;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static com.mjsasha.lesdoc.TestData.NOT_EMPTY_LESSONS_LIST;
+import static com.mjsasha.lesdoc.TestData.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class LessonsServiceTest {
 
@@ -23,7 +24,7 @@ class LessonsServiceTest {
     @Test
     void createLesson(){
         ArgumentCaptor<Lesson> argument = ArgumentCaptor.forClass(Lesson.class);
-        lessonsService.create(NOT_EMPTY_LESSONS_LIST.get(0));
+        lessonsService.create(MOCK_LESSON);
 
         verify(lessonsRepository).save(argument.capture());
         assertEquals("First folder", argument.getValue().getFolderName());
@@ -32,7 +33,7 @@ class LessonsServiceTest {
     @Test
     void createLessonWithEmptyFolderName(){
         ArgumentCaptor<Lesson> argument = ArgumentCaptor.forClass(Lesson.class);
-        lessonsService.create(NOT_EMPTY_LESSONS_LIST.get(2));
+        lessonsService.create(MOCK_LESSON_WITH_EMPTY_FOLDER_NAME);
 
         verify(lessonsRepository).save(argument.capture());
         assertEquals("Third lesson", argument.getValue().getFolderName());
@@ -40,7 +41,7 @@ class LessonsServiceTest {
 
     @Test
     void readReturnAnyEntities() {
-        Mockito.when(lessonsRepository.findAll()).thenReturn(NOT_EMPTY_LESSONS_LIST);
+        when(lessonsRepository.findAll()).thenReturn(LESSONS_LIST);
 
         List<Lesson> lessons = lessonsService.read();
 
@@ -49,14 +50,14 @@ class LessonsServiceTest {
 
     @Test
     void readReturnExceptionWhenEmptyList() {
-        Mockito.when(lessonsRepository.findAll()).thenReturn(Collections.emptyList());
+        when(lessonsRepository.findAll()).thenReturn(Collections.emptyList());
 
         assertThrows(EntityNotFoundException.class, lessonsService::read);
     }
 
     @Test
     void readExistingEntity() {
-        Mockito.when(lessonsRepository.findById(1)).thenReturn(Optional.of(NOT_EMPTY_LESSONS_LIST.get(0)));
+        when(lessonsRepository.findById(1)).thenReturn(Optional.of(MOCK_LESSON));
 
         var lesson = lessonsService.read(1);
 
@@ -65,21 +66,21 @@ class LessonsServiceTest {
 
     @Test
     void readNotExistingEntity() {
-        Mockito.when(lessonsRepository.findById(1)).thenReturn(Optional.empty());
+        when(lessonsRepository.findById(1)).thenReturn(Optional.empty());
 
         assertThrows(EntityNotFoundException.class, () -> lessonsService.read(1));
     }
 
     @Test
     void deleteExistingLesson() {
-        Mockito.when(lessonsRepository.findById(1)).thenReturn(Optional.of(NOT_EMPTY_LESSONS_LIST.get(0)));
+        when(lessonsRepository.findById(1)).thenReturn(Optional.of(MOCK_LESSON));
 
         assertDoesNotThrow(() -> lessonsService.delete(1));
     }
 
     @Test
     void deleteNotExistingLesson() {
-        Mockito.when(lessonsRepository.findById(1)).thenReturn(Optional.empty());
+        when(lessonsRepository.findById(1)).thenReturn(Optional.empty());
 
         assertThrows(EntityNotFoundException.class, () -> lessonsService.delete(1));
     }

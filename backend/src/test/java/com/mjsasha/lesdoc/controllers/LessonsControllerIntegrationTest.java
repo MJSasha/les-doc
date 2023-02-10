@@ -6,7 +6,6 @@ import com.mjsasha.lesdoc.repositories.LessonsRepository;
 import com.mjsasha.lesdoc.services.FileStorageService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,8 +19,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.Collections;
 import java.util.Optional;
 
-import static com.mjsasha.lesdoc.TestData.NOT_EMPTY_LESSONS_LIST;
+import static com.mjsasha.lesdoc.TestData.*;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -42,14 +42,13 @@ class LessonsControllerIntegrationTest {
     @MockBean
     private FileStorageService fileStorageService;
 
-    public LessonsControllerIntegrationTest() {
+    LessonsControllerIntegrationTest() {
         this.objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
     }
 
     @Test
     void createLesson() throws Exception {
-        var lessonForTest = NOT_EMPTY_LESSONS_LIST.get(0);
-        String lessonJson = objectWriter.writeValueAsString(lessonForTest);
+        String lessonJson = objectWriter.writeValueAsString(MOCK_LESSON);
 
         mvc.perform(MockMvcRequestBuilders
                         .post("/lessons")
@@ -57,15 +56,14 @@ class LessonsControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Lesson with name: " + lessonForTest.getName() + ", with folder name: " + lessonForTest.getFolderName() + ", successfully created."));
+                .andExpect(content().string("Lesson with name: " + MOCK_LESSON.getName() + ", with folder name: " + MOCK_LESSON.getFolderName() + ", successfully created."));
 
-        verify(fileStorageService).createDirectory(lessonForTest.getFolderName());
+        verify(fileStorageService).createDirectory(MOCK_LESSON.getFolderName());
     }
 
     @Test
     void createLessonWithoutFolderName() throws Exception {
-        var lessonForTest = NOT_EMPTY_LESSONS_LIST.get(2);
-        String lessonJson = objectWriter.writeValueAsString(lessonForTest);
+        String lessonJson = objectWriter.writeValueAsString(MOCK_LESSON_WITH_EMPTY_FOLDER_NAME);
 
         mvc.perform(MockMvcRequestBuilders
                         .post("/lessons")
@@ -73,15 +71,15 @@ class LessonsControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Lesson with name: " + lessonForTest.getName() + ", with folder name: " + lessonForTest.getName() + ", successfully created."));
+                .andExpect(content().string("Lesson with name: " + MOCK_LESSON_WITH_EMPTY_FOLDER_NAME.getName() + ", with folder name: " + MOCK_LESSON_WITH_EMPTY_FOLDER_NAME.getName() + ", successfully created."));
 
-        verify(fileStorageService).createDirectory(lessonForTest.getName());
+        verify(fileStorageService).createDirectory(MOCK_LESSON_WITH_EMPTY_FOLDER_NAME.getName());
     }
 
     @Test
     void getAllExistingLessons() throws Exception {
-        Mockito.when(lessonsRepository.findAll()).thenReturn(NOT_EMPTY_LESSONS_LIST);
-        String lessonJson = objectWriter.writeValueAsString(NOT_EMPTY_LESSONS_LIST);
+        when(lessonsRepository.findAll()).thenReturn(LESSONS_LIST);
+        String lessonJson = objectWriter.writeValueAsString(LESSONS_LIST);
 
         mvc.perform(get("/lessons"))
                 .andExpect(status().isOk())
@@ -90,7 +88,7 @@ class LessonsControllerIntegrationTest {
 
     @Test
     void getAllNotExistingLessons() throws Exception {
-        Mockito.when(lessonsRepository.findAll()).thenReturn(Collections.emptyList());
+        when(lessonsRepository.findAll()).thenReturn(Collections.emptyList());
 
         mvc.perform(get("/lessons"))
                 .andExpect(status().isNoContent());
@@ -98,9 +96,8 @@ class LessonsControllerIntegrationTest {
 
     @Test
     void getExistingLesson() throws Exception {
-        var lessonForTest = NOT_EMPTY_LESSONS_LIST.get(0);
-        Mockito.when(lessonsRepository.findById(1)).thenReturn(Optional.ofNullable(lessonForTest));
-        String lessonJson = objectWriter.writeValueAsString(lessonForTest);
+        when(lessonsRepository.findById(1)).thenReturn(Optional.of(MOCK_LESSON));
+        String lessonJson = objectWriter.writeValueAsString(MOCK_LESSON);
 
         mvc.perform(get("/lessons/1"))
                 .andExpect(status().isOk())
@@ -115,13 +112,12 @@ class LessonsControllerIntegrationTest {
 
     @Test
     void deleteExistingLesson() throws Exception {
-        var lessonForTest = NOT_EMPTY_LESSONS_LIST.get(0);
-        Mockito.when(lessonsRepository.findById(1)).thenReturn(Optional.ofNullable(lessonForTest));
+        when(lessonsRepository.findById(1)).thenReturn(Optional.of(MOCK_LESSON));
 
         mvc.perform(delete("/lessons/1"))
                 .andExpect(status().isOk());
 
-        verify(fileStorageService).removeDirectory(lessonForTest.getFolderName());
+        verify(fileStorageService).removeDirectory(MOCK_LESSON.getFolderName());
     }
 
     @Test

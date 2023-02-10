@@ -10,10 +10,13 @@ import java.util.Arrays;
 
 public class TestData {
 
-    public static final ArrayList<Lesson> NOT_EMPTY_LESSONS_LIST = new ArrayList<>(Arrays.asList(
-            new Lesson(1, "First lesson", "First folder", "First description"),
+    public static final Lesson MOCK_LESSON = new Lesson(1, "First lesson", "First folder", "First description");
+    public static final Lesson MOCK_LESSON_WITH_EMPTY_FOLDER_NAME = new Lesson(3, "Third lesson", null, "Third description");
+
+    public static final ArrayList<Lesson> LESSONS_LIST = new ArrayList<>(Arrays.asList(
+            MOCK_LESSON,
             new Lesson(2, "Second lesson", "Second folder", "Second description"),
-            new Lesson(3, "Third lesson", null, "Third description")
+            MOCK_LESSON_WITH_EMPTY_FOLDER_NAME
     ));
 
     public static final MultipartFile EXISTING_FILE = new MockMultipartFile(
