@@ -11,7 +11,7 @@ const upload = (id: number | undefined, file: File, onUploadProgress: any): Prom
         },
         onUploadProgress,
         params: {
-            id
+            lessonId: id
         }
     });
 };
