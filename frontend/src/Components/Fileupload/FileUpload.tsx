@@ -1,46 +1,64 @@
-import React, { useState, useEffect } from "react";
+import React, {useState} from "react";
 import UploadService from "../../services/FileUploadService";
 import IFile from "../../types/FileInterface";
+import IFileUpload from "../../types/PropsTypes/FileUploadPropsInterface";
 
-const FileUpload: React.FC = () => {
-    const [currentFile, setCurrentFile] = useState<File>();
+const FileUpload: React.FC<IFileUpload> = ({currentLessonId}) => {
+    const [currentFile, setCurrentFile] = useState<File | undefined>();
     const [progress, setProgress] = useState<number>(0);
     const [message, setMessage] = useState<string>("");
-    const [fileInfos, setFileInfos] = useState<IFile[]>([]);
-    const [currentFileName, setCurrentFileName] = useState<string>("")
+    const [fileInfos, setFileInfos] = useState<File[]>([]);
 
-    useEffect(() => {
-        UploadService.getFiles(currentFileName).then((response) => {
-            setFileInfos(response.data);
-            console.log(fileInfos)
-        });
-    });
+    // useEffect(() => {
+    //     UploadService.getAllFilesNames(currentLessonId).then((res) => {
+    //         console.log(res)
+    //         setFileInfos(res.data);
+    //         // console.log(fileInfos)
+    //     });
+    // },[message]);
 
+    const getAllFileNames = () => {
+        UploadService.getAllFilesNames(currentLessonId)
+            .then((res) => {
+                console.log(res)
+                setFileInfos(res.data);
+                // console.log(fileInfos)
+            })
+            .catch(err => {
+                    console.log(err)
+                })
+    }
+
+    // const selectFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     const {files} = event.target;
+    //     const selectedFile = files as FileList;
+    //     setCurrentFile(selectedFile?.[0]);
+    //     setProgress(0);
+    // };
     const selectFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { files } = event.target;
-        const selectedFiles = files as FileList;
-        setCurrentFile(selectedFiles?.[0]);
-        // console.log(selectedFiles[0]);
+        const {files} = event.target;
+        const selectedFile = files as FileList;
+        setCurrentFile(selectedFile?.[0]);
         setProgress(0);
-        setCurrentFileName(selectedFiles[0].name);
     };
 
     const upload = () => {
         setProgress(0);
         if (!currentFile) return;
-
-        UploadService.upload(currentFile, (event: any) => {
+        console.log(currentFile)
+        UploadService.upload(currentLessonId, currentFile, (event: any) => {
             setProgress(Math.round((100 * event.loaded) / event.total));
         })
-            .then((response) => {
-                setMessage(response.data.message);
-                return UploadService.getFiles(currentFileName);
+            .then((res) => {
+                console.log(res)
+                setMessage(res.data.message);
+                return getAllFileNames();
             })
-            // .then((files) => {
-            //     // console.log(files)
-            //     setFileInfos(files.data);
-            //     // console.log(fileInfos)
-            // })
+            .then((files) => {
+                // console.log(files)
+                // setFileInfos(files.data);
+                // console.log(fileInfos)
+            })
             .catch((err) => {
                 setProgress(0);
 
@@ -59,7 +77,7 @@ const FileUpload: React.FC = () => {
             <div className="row">
                 <div className="col-8">
                     <label className="btn btn-default p-0">
-                        <input type="file" onChange={selectFile} />
+                        <input type="file" onChange={selectFile}/>
                     </label>
                 </div>
 
@@ -82,7 +100,7 @@ const FileUpload: React.FC = () => {
                         aria-valuenow={progress}
                         aria-valuemin={0}
                         aria-valuemax={100}
-                        style={{ width: progress + "%" }}
+                        style={{width: progress + "%"}}
                     >
                         {progress}%
                     </div>

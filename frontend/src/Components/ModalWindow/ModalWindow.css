@@ -1,0 +1,28 @@
+
+.modal__wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal_content_wrapper_zone {
+    background: white;
+    /*width: 330px !important;*/
+    /*height: 160px;*/
+    border: black;
+    border-radius: 15px;
+}
+.modal_content_zone{
+    height: 100%;
+}
+.modal-body{
+    min-width: 20vw;
+    height: 70px;
+}
