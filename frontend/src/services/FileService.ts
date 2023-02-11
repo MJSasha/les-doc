@@ -35,10 +35,10 @@ const downloadUploadedFiles = (id: number | undefined, fileName: string): Promis
     })
 }
 
-const FileUploadService = {
+const FileService = {
     upload,
     getAllFilesNames,
     downloadUploadedFiles
 };
 
-export default FileUploadService;
+export default FileService;

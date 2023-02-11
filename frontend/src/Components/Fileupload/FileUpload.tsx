@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import UploadService from "../../services/FileUploadService";
+import FileService from "../../services/FileService";
 import IFile from "../../types/FileInterface";
 import IFileUpload from "../../types/PropsTypes/FileUploadPropsInterface";
 
@@ -18,7 +18,7 @@ const FileUpload: React.FC<IFileUpload> = ({currentLessonId}) => {
     // },[message]);
 
     const getAllFileNames = () => {
-        UploadService.getAllFilesNames(currentLessonId)
+        FileService.getAllFilesNames(currentLessonId)
             .then((res) => {
                 console.log(res)
                 setFileInfos(res.data);
@@ -46,7 +46,7 @@ const FileUpload: React.FC<IFileUpload> = ({currentLessonId}) => {
         setProgress(0);
         if (!currentFile) return;
         console.log(currentFile)
-        UploadService.upload(currentLessonId, currentFile, (event: any) => {
+        FileService.upload(currentLessonId, currentFile, (event: any) => {
             setProgress(Math.round((100 * event.loaded) / event.total));
         })
             .then((res) => {
