@@ -3,7 +3,6 @@ package com.mjsasha.lesdoc;
 import com.mjsasha.lesdoc.data.entities.Lesson;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,21 +18,21 @@ public class TestData {
             MOCK_LESSON_WITH_EMPTY_FOLDER_NAME
     ));
 
-    public static final MultipartFile EXISTING_FILE = new MockMultipartFile(
+    public static final MockMultipartFile EXISTING_FILE = new MockMultipartFile(
             "file",
             "hello.txt",
             MediaType.TEXT_PLAIN_VALUE,
             "Hello, World!".getBytes()
     );
 
-    public static final MultipartFile MOCK_FILE = new MockMultipartFile(
+    public static final MockMultipartFile MOCK_FILE = new MockMultipartFile(
             "file",
             "hello_created.txt",
             MediaType.TEXT_PLAIN_VALUE,
             "Hello, World Created!".getBytes()
     );
 
-    public static final MultipartFile INVALID_MOCK_FILE = new MockMultipartFile(
+    public static final MockMultipartFile INVALID_MOCK_FILE = new MockMultipartFile(
             "file",
             "hello..txt",
             MediaType.TEXT_PLAIN_VALUE,

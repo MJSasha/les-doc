@@ -52,7 +52,7 @@ public class FilesController {
 
     @Operation(summary = "Use for upload many file")
     @PostMapping("/uploadMultipleFiles")
-    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files, @RequestParam Integer lessonId) {
+    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("file") MultipartFile[] files, @RequestParam Integer lessonId) {
         return Arrays.stream(files)
                 .map(file -> uploadFile(file, lessonId))
                 .collect(Collectors.toList());
