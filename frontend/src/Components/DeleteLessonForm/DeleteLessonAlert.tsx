@@ -35,12 +35,16 @@ const DeleteLessonAlert: React.FC<IDeleteLessonAlert> = ({
                 </div>
                 <div className="modal-body">
                     <div className="d-flex flex-column justify-content-center h-100 p-3">
-                        <div className="alert alert-danger py-1 mb-1" role="alert">All files attached to this lesson will be lost!</div>
+                        <div className="alert alert-danger py-1 mb-1" role="alert">All files attached to this lesson
+                            will be lost!
+                        </div>
                     </div>
                 </div>
                 <div className="modal-footer">
                     <div className="pb-2 pe-3">
-                    <button type="button" className="btn btn-primary" onClick={() => DeleteHandler(currentDeletingLessonId)}>Delete anyway</button>
+                        <button type="button" className="btn btn-primary"
+                                onClick={() => DeleteHandler(currentDeletingLessonId)}>Delete anyway
+                        </button>
                     </div>
                 </div>
             </>

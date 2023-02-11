@@ -38,7 +38,7 @@ const CreateLessonForm: React.FC<IUpdateListOfLessons> = ({updateLessonsList, se
                 <form onSubmit={CreateHandler}>
                     <div className="modal-body">
                         <div className="d-flex flex-column justify-content-center h-100 p-3">
-                            <input className="form-control" type="text" value={lesson.name} onChange={(e) => {
+                            <input autoFocus={true} className="form-control" type="text" value={lesson.name} onChange={(e) => {
                                 setLesson({name: e.target.value})
                             }}/>
                         </div>

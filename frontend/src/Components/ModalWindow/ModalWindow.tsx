@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useRef, useEffect} from "react";
 import {useOnClickOutside} from 'usehooks-ts'
 
 import IModalContent from "../../types/PropsTypes/ModalWindowPropsInterface";
@@ -9,6 +9,17 @@ const ModalWindow: React.FC<IModalContent> = ({getModalContent, setVisible, visi
     const modalRef = useRef(null);
 
     useOnClickOutside(modalRef, () => setVisible(false));
+
+    useEffect(() => {
+        const close = (e: KeyboardEvent) => {
+            if(e.key === 'Escape'){
+                setVisible(false)
+            }
+        }
+        window.addEventListener('keydown', close)
+        return () => window.removeEventListener('keydown', close)
+    },[])
+
     return (
         <div className="modal__wrapper">
             <div className="modal-dialog modal-dialog-centered modal_content_wrapper_zone">
