@@ -3,51 +3,53 @@ import React from "react";
 // Style imports
 import "./App.css";
 // Components imports
-import FileUpload from "./Components/Fileupload/FileUpload";
-import CreateLesson from "./Components/CreateLesson/CreateLesson";
+import SideBar from "./Components/SideBar/SideBar";
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 // Services imports
-import GetAllLessonsService from "./services/GetAllLessonsService";
+// Types imports
+// img imports
+import logo from "./images/logo.png";
 
 const App = () => {
 
     return (
         <>
-            <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
-                 style={{width: "280px", height: "100%"}}>
-                <a href="/"
-                   className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <span className="fs-4">LesDoc</span>
-                </a>
-                <hr/>
-                <CreateLesson/>
-                <hr/>
-                <ul className="nav nav-pills flex-column mb-auto">
-                    <li className="nav-item">
-                        <a href="#" className="nav-link active" aria-current="page">
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link text-white">
-                            Dashboard
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link text-white">
-                            Orders
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link text-white">
-                            Products
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="nav-link text-white">
-                            Customers
-                        </a>
-                    </li>
-                </ul>
+            <Navbar bg="dark" variant="dark" expand={"md"}>
+                <Container fluid>
+                    <Navbar.Brand href="/">
+                        <img
+                            alt=""
+                            src={logo}
+                            width="30"
+                            height="30"
+                            className="d-inline-block align-top"
+                        />{' '}
+                        Les Doc
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${"md"}`}/>
+                    <Navbar.Offcanvas
+                        className="bg-dark d-md-none"
+                        id={`offcanvasNavbar-expand-${"md"}`}
+                        aria-labelledby={`offcanvasNavbarLabel-expand-${"md"}`}
+                        placement="start"
+                    >
+                        <Offcanvas.Header closeButton closeVariant="white">
+                            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${"md"}`} className="text-white">
+                                Lessons
+                            </Offcanvas.Title>
+                        </Offcanvas.Header>
+                        <Offcanvas.Body>
+                            <SideBar/>
+                        </Offcanvas.Body>
+                    </Navbar.Offcanvas>
+                </Container>
+            </Navbar>
+            <div className="d-flex flex-row h-100">
+                <div className="d-none d-md-block border-top border-secondary h-100" style={{width: "280px"}}>
+                    <SideBar/>
+                </div>
             </div>
         </>
     );
