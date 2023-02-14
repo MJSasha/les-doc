@@ -33,6 +33,10 @@ module.exports = {
                     'style-loader',
                     'css-loader'
                 ]
+            },
+            {
+                test: /\.(png|jp(e*)g|svg|gif)$/i,
+                loader: 'file-loader',
             }
         ]
     },
@@ -46,10 +50,11 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-        template: "public/index.html",
-        hash: true, // cache busting
-        filename: '../dist/index.html'
-    }),
+            template: "public/index.html",
+            hash: true, // cache busting
+            filename: '../dist/index.html',
+            favicon: "public/favicon.png"
+        }),
         new webpack.DefinePlugin({
             'process.env': JSON.stringify(process.env)
         })
