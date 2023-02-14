@@ -1,7 +1,4 @@
 
-/*.custom__hover{
-    -webkit-line-clamp: 2;
-}*/
 .custom__hover:hover{
     cursor: pointer;
     background-color: rgba(13, 110, 253, 0.4)!important;

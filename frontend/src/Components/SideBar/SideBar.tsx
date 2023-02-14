@@ -45,10 +45,10 @@ const SideBar: React.FC = () => {
                                    currentDeletingLessonId={currentDeletingLessonId}
                                    setVisible={setDeleteLessonAlertVisibility} visible={deleteLessonAlertVisibility}/>
             }
-            <div className="d-flex flex-column flex-shrink-0 text-white bg-dark"
+            <div className="d-flex flex-column flex-shrink-0 text-white bg-dark pe-2"
                  style={{height: "100%"}}>
                 <div className="px-3 pt-3">
-                    <button type="button" className="btn btn-primary create_lesson_btn fs-5 w-100" onClick={() => {
+                    <button type="button" className="btn btn-primary fs-5 w-100" onClick={() => {
                         setCreateLessonFormVisibility(!createLessonFormVisibility)
                     }}>New
                     </button>

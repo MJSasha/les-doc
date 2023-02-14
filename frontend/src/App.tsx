@@ -16,39 +16,41 @@ const App = () => {
 
     return (
         <>
-            <Navbar bg="dark" variant="dark" expand={"md"}>
-                <Container fluid>
-                    <Navbar.Brand href="/">
-                        <img
-                            alt=""
-                            src={logo}
-                            width="30"
-                            height="30"
-                            className="d-inline-block align-top"
-                        />{' '}
-                        Les Doc
-                    </Navbar.Brand>
-                    <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${"md"}`}/>
-                    <Navbar.Offcanvas
-                        className="bg-dark d-md-none"
-                        id={`offcanvasNavbar-expand-${"md"}`}
-                        aria-labelledby={`offcanvasNavbarLabel-expand-${"md"}`}
-                        placement="start"
-                    >
-                        <Offcanvas.Header closeButton closeVariant="white">
-                            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${"md"}`} className="text-white">
-                                Lessons
-                            </Offcanvas.Title>
-                        </Offcanvas.Header>
-                        <Offcanvas.Body>
-                            <SideBar/>
-                        </Offcanvas.Body>
-                    </Navbar.Offcanvas>
-                </Container>
-            </Navbar>
-            <div className="d-flex flex-row h-100">
-                <div className="d-none d-md-block border-top border-secondary h-100" style={{width: "280px"}}>
-                    <SideBar/>
+            <div className="d-flex flex-column h-100">
+                <Navbar bg="dark" variant="dark" expand={"md"}>
+                    <Container fluid>
+                        <Navbar.Brand href="/">
+                            <img
+                                alt=""
+                                src={logo}
+                                width="30"
+                                height="30"
+                                className="d-inline-block align-top"
+                            />{' '}
+                            Les Doc
+                        </Navbar.Brand>
+                        <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${"md"}`}/>
+                        <Navbar.Offcanvas
+                            className="bg-dark d-md-none"
+                            id={`offcanvasNavbar-expand-${"md"}`}
+                            aria-labelledby={`offcanvasNavbarLabel-expand-${"md"}`}
+                            placement="start"
+                        >
+                            <Offcanvas.Header closeButton closeVariant="white">
+                                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${"md"}`} className="text-white">
+                                    Lessons
+                                </Offcanvas.Title>
+                            </Offcanvas.Header>
+                            <Offcanvas.Body>
+                                <SideBar/>
+                            </Offcanvas.Body>
+                        </Navbar.Offcanvas>
+                    </Container>
+                </Navbar>
+                <div className="sidebar__container">
+                    <div className="d-none d-md-block border-top border-secondary h-100" style={{width: "280px"}}>
+                        <SideBar/>
+                    </div>
                 </div>
             </div>
         </>
