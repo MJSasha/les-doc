@@ -1,0 +1,21 @@
+*::-webkit-scrollbar,
+html *::-webkit-scrollbar {
+    height: 8px;
+    width: 5px;
+}
+
+*::-webkit-scrollbar-track,
+html *::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb,
+html *::-webkit-scrollbar-thumb {
+    background-color: rgb(139, 139, 139);
+    border-radius: 5px;
+}
+
+.sidebar__container{
+    flex-grow: 1;
+    overflow-y: auto;
+}

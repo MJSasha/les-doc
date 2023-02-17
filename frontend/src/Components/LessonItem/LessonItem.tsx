@@ -1,17 +1,19 @@
 import React, {useState} from "react";
 import delete_icon from "../../images/delete_icon.png";
-
+import './LessonItem.css';
 import ILessonItem from "../../types/PropsTypes/LessonItemPropsInterface";
+import {useNavigate, useParams} from "react-router-dom";
 
 const LessonItem: React.FC<ILessonItem> = ({
                                                lesson,
                                                setDeleteLessonAlertVisibility,
                                                deleteLessonAlertVisibility,
-                                               setCurrentDeletingLessonId,
-                                               setCurrentLessonId,
-                                               currentLessonId
+                                               setCurrentDeletingLessonId
                                            }) => {
-    const [hover, setHover] = useState<boolean>(false)
+    const [hover, setHover] = useState<boolean>(false);
+    const navigate = useNavigate();
+    const {currentLessonId} = useParams();
+    const id = Number(currentLessonId);
 
     const DeleteButton = () => {
         return (
@@ -33,8 +35,10 @@ const LessonItem: React.FC<ILessonItem> = ({
                 tabIndex={0}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
-                onClick={() => setCurrentLessonId(lesson.id)}
-                className="nav-link text-white border border-primary d-flex justify-content-between align-items-center custom__hover text-break">
+                onClick={() => {
+                    navigate(`/lesson/${lesson.id}`)
+                }}
+                className={`nav-link text-white border border-primary d-flex justify-content-between align-items-center custom__hover text-break ${lesson.id === id ? 'custom__active' : ''}`}>
                 {lesson.name}
                 <div className="d-none d-md-block" style={{width: "36px", height: "32px"}}>
                     {hover &&

@@ -6,6 +6,4 @@ export default interface ILessonItem {
     setDeleteLessonAlertVisibility: Dispatch<SetStateAction<boolean>>,
     deleteLessonAlertVisibility: boolean,
     setCurrentDeletingLessonId: Dispatch<SetStateAction<number | undefined>>,
-    setCurrentLessonId: Dispatch<SetStateAction<number | undefined>>,
-    currentLessonId: number | undefined
 }

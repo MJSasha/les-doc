@@ -22,7 +22,7 @@ const getAllFilesNames = (id: number | undefined): Promise<any> => {
             "Content-Type": "multipart/form-data",
         },
         params: {
-            id
+            lessonId: id
         }
     });
 };
@@ -30,7 +30,7 @@ const getAllFilesNames = (id: number | undefined): Promise<any> => {
 const downloadUploadedFiles = (id: number | undefined, fileName: string): Promise<any> => {
     return axios.get(url+'files/downloadFile'+fileName,{
         params: {
-            id
+            lessonId: id
         }
     })
 }

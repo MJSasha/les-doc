@@ -1,0 +1,11 @@
+
+.custom__hover:hover{
+    cursor: pointer;
+    background-color: rgba(13, 110, 253, 0.4)!important;
+}
+.custom__hover:focus{
+    background-color: rgba(13, 110, 253, 0.8) !important;
+}
+.custom__active{
+    background-color: rgba(13, 110, 253, 0.8) !important;
+}

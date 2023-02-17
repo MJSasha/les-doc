@@ -10,7 +10,6 @@ const DeleteLessonAlert: React.FC<IDeleteLessonAlert> = ({
                                                              visible
                                                          }) => {
 
-
     const DeleteHandler = (id: number | undefined) => {
         LessonService.Delete(id)
             .then(() => {
