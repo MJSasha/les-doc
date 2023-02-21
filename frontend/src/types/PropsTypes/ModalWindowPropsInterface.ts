@@ -1,7 +1,7 @@
-import {Dispatch, SetStateAction} from "react";
+import React, {Dispatch, SetStateAction} from "react";
 
 export default interface IModalContent{
-    getModalContent: () => JSX.Element,
+    getModalContent: React.ReactElement,
     setVisible: Dispatch<SetStateAction<boolean>>,
     visible: boolean
 }

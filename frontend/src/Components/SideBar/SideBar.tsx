@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
 import CreateLessonForm from "../CreateLessonForm/CreateLessonForm";
-import DeleteLessonAlert from "../DeleteLessonForm/DeleteLessonAlert";
-import LessonItem from "../LessonItem/LessonItem";
 import LessonService from "../../services/LessonService";
 import ILesson from "../../types/LessonInterface";
+import ModalWindow from "../ModalWindow/ModalWindow";
+import LessonItem from "../LessonItem/LessonItem";
+import DeleteLessonAlert from "../DeleteLessonForm/DeleteLessonAlert";
 
 const SideBar: React.FC = () => {
     const [lessonsList, setLessonsList] = useState<ILesson[]>([]);
@@ -29,17 +30,16 @@ const SideBar: React.FC = () => {
 
     return (
         <>
-            {createLessonFormVisibility &&
-                <CreateLessonForm updateLessonsList={UpdateLessonsList} setVisible={setCreateLessonFormVisibility}
-                                  visible={createLessonFormVisibility}/>
-            }
-            {deleteLessonAlertVisibility &&
-                <DeleteLessonAlert updateLessonsList={UpdateLessonsList}
-                                   currentDeletingLessonId={currentDeletingLessonId}
-                                   setVisible={setDeleteLessonAlertVisibility} visible={deleteLessonAlertVisibility}/>
-            }
-            <div className="d-flex flex-column flex-shrink-0 text-white bg-dark pe-2"
-                 style={{height: "100%"}}>
+            <ModalWindow getModalContent={<CreateLessonForm updateLessonsList={UpdateLessonsList}
+                                                            setVisible={setCreateLessonFormVisibility}
+                                                            visible={createLessonFormVisibility}/>}
+                         setVisible={setCreateLessonFormVisibility} visible={createLessonFormVisibility}/>
+            <ModalWindow getModalContent={<DeleteLessonAlert updateLessonsList={UpdateLessonsList}
+                                                             currentDeletingLessonId={currentDeletingLessonId}
+                                                             setVisible={setDeleteLessonAlertVisibility}
+                                                             visible={deleteLessonAlertVisibility}/>}
+                         setVisible={setDeleteLessonAlertVisibility} visible={deleteLessonAlertVisibility}/>
+            <div className="d-flex flex-column flex-shrink-0 text-white bg-dark pe-2 h-100">
                 <div className="px-3 pt-3">
                     <button type="button" className="btn btn-primary fs-5 w-100" onClick={() => {
                         setCreateLessonFormVisibility(!createLessonFormVisibility)

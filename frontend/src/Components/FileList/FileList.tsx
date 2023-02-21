@@ -29,7 +29,7 @@ const FileList: React.FC = () => {
 
     return (
         <div>
-            {fileList.map((file, index) => {
+            {fileList && fileList.map((file, index) => {
                 return (
                     <div key={index}>
                         {file}

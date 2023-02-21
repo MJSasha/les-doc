@@ -25,7 +25,6 @@ const CreateLessonForm: React.FC<IUpdateListOfLessons> = ({updateLessonsList, se
             )
         setLesson({name: ""})
     }
-    const GetModalContent = () => {
         return (
             <>
                 <div className="modal-header container d-flex flex-row justify-content-between pt-2 px-3">
@@ -52,12 +51,6 @@ const CreateLessonForm: React.FC<IUpdateListOfLessons> = ({updateLessonsList, se
                 </form>
             </>
         )
-    }
-    return (
-        <>
-            <ModalWindow getModalContent={GetModalContent} setVisible={setVisible} visible={visible}/>
-        </>
-    )
 }
 
 export default CreateLessonForm;
