@@ -6,8 +6,11 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import SideBar from "../SideBar/SideBar";
 import IMainLayout from "../../types/PropsTypes/MainLayoutPropsInterface";
 import './MainLayout.css';
+import {useParams} from "react-router-dom";
 
 const MainLayout = (props: React.PropsWithChildren<IMainLayout>) => {
+    const {currentLessonId} = useParams();
+    const id = Number(currentLessonId);
 
     return (
         <div className="d-flex flex-column h-100">
@@ -47,7 +50,7 @@ const MainLayout = (props: React.PropsWithChildren<IMainLayout>) => {
                 </div>
                 <div className="flex-fill">
                     <div className="container py-3">
-                        {props.children}
+                        {id ? props.children : <div>Choose lesson to upload or download files.</div>}
                     </div>
                 </div>
             </div>
