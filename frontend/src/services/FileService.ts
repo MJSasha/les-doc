@@ -16,7 +16,7 @@ const upload = (id: number | undefined, file: File, onUploadProgress: any): Prom
     });
 };
 
-const getAllFilesNames = (id: number | undefined): Promise<any> => {
+const getAll = (id: number | undefined): Promise<any> => {
     return axios.get(url + 'files/getAllFilesNames', {
         headers: {
             "Content-Type": "multipart/form-data",
@@ -27,9 +27,18 @@ const getAllFilesNames = (id: number | undefined): Promise<any> => {
     });
 };
 
-const downloadUploadedFiles = (id: number | undefined, fileName: string): Promise<any> => {
-    return axios.get(url+'files/downloadFile'+fileName,{
+const download = (id: number | undefined, fileName: string): Promise<any> => {
+    return axios.get(url+'files/downloadFile/'+fileName,{
         params: {
+            lessonId: id
+        }
+    })
+}
+
+const del = (id: number | undefined, fileName: string): Promise<any> => {
+    return axios.delete(url+'files', {
+        params: {
+            fileName: fileName,
             lessonId: id
         }
     })
@@ -37,8 +46,9 @@ const downloadUploadedFiles = (id: number | undefined, fileName: string): Promis
 
 const FileService = {
     upload,
-    getAllFilesNames,
-    downloadUploadedFiles
+    getAll,
+    download,
+    del
 };
 
 export default FileService;

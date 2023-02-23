@@ -22,15 +22,16 @@ const FileUpload: React.FC<IFileUpload> = ({updateFileList, setVisible}) => {
     const upload = () => {
         setProgress(0);
         if (!currentFile) return;
-        console.log(currentFile)
         FileService.upload(id, currentFile, (event: any) => {
             setProgress(Math.round((100 * event.loaded) / event.total));
-            // setVisible(false)
+            // setTimeout(() => {
+            //     setVisible(false)
+            // }, 1000)
         })
             .then((res) => {
-                console.log(res)
                 setMessage(res.data.message);
                 updateFileList();
+                // setVisible(false);
             })
             .catch((err) => {
                 setProgress(0);
