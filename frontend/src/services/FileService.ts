@@ -29,6 +29,7 @@ const getAll = (id: number | undefined): Promise<any> => {
 
 const download = (id: number | undefined, fileName: string): Promise<any> => {
     return axios.get(url+'files/downloadFile/'+fileName,{
+        responseType: "blob",
         params: {
             lessonId: id
         }

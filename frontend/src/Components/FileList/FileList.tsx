@@ -8,7 +8,7 @@ import download_icon from "../../images/download_icon.png";
 
 const FileList: React.FC = () => {
     const [fileList, setFileList] = useState<string[]>(['']);
-    const [errMsg, setErrMsg] = useState<string>('');
+    const [errMsg, setErrMsg] = useState<string>('There are no files here');
     const [uploadFileFormVisibility, setUploadFileFormVisibility] = useState<boolean>(false);
 
     const {currentLessonId} = useParams();
@@ -44,7 +44,12 @@ const FileList: React.FC = () => {
     const downloadFile = (fileName: string) => {
         FileService.download(id, fileName)
             .then(res => {
-                console.log(res)
+                const url = window.URL.createObjectURL(new Blob([res.data]))
+                const link = document.createElement('a')
+                link.href = url
+                link.setAttribute('download', fileName)
+                document.body.appendChild(link)
+                link.click()
             })
             .catch(err => {
                 console.log(err)
