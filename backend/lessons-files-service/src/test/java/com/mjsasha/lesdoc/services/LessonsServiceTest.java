@@ -13,8 +13,7 @@ import java.util.Optional;
 
 import static com.mjsasha.lesdoc.TestData.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class LessonsServiceTest {
 
@@ -22,7 +21,9 @@ class LessonsServiceTest {
     private final LessonsService lessonsService = new LessonsService(lessonsRepository, Mockito.mock(FileStorageService.class));
 
     @Test
-    void createLesson(){
+    void createLesson() {
+        when(lessonsRepository.save(any())).thenReturn(MOCK_LESSON);
+
         ArgumentCaptor<Lesson> argument = ArgumentCaptor.forClass(Lesson.class);
         lessonsService.create(MOCK_LESSON);
 
@@ -31,7 +32,9 @@ class LessonsServiceTest {
     }
 
     @Test
-    void createLessonWithEmptyFolderName(){
+    void createLessonWithEmptyFolderName() {
+        when(lessonsRepository.save(any())).thenReturn(MOCK_LESSON_WITH_EMPTY_FOLDER_NAME);
+
         ArgumentCaptor<Lesson> argument = ArgumentCaptor.forClass(Lesson.class);
         lessonsService.create(MOCK_LESSON_WITH_EMPTY_FOLDER_NAME);
 

@@ -11,12 +11,6 @@
     <packaging>jar</packaging>
     <artifactId>statistics-service</artifactId>
 
-    <properties>
-        <maven.compiler.source>18</maven.compiler.source>
-        <maven.compiler.target>18</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
         <!--DB-->
         <dependency>
@@ -48,11 +42,15 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.mjsasha.models</groupId>
+            <groupId>com.mjsasha.commonmodels</groupId>
             <artifactId>common-models</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>statistics-service</finalName>
+    </build>
 
 </project>

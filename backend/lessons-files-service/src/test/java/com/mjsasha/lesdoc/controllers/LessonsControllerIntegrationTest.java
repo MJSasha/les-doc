@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static com.mjsasha.lesdoc.TestData.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -48,6 +49,7 @@ class LessonsControllerIntegrationTest {
 
     @Test
     void createLesson() throws Exception {
+        when(lessonsRepository.save(any())).thenReturn(MOCK_LESSON);
         String lessonJson = objectWriter.writeValueAsString(MOCK_LESSON);
 
         mvc.perform(MockMvcRequestBuilders
@@ -56,13 +58,14 @@ class LessonsControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Lesson with name: " + MOCK_LESSON.getName() + ", with folder name: " + MOCK_LESSON.getFolderName() + ", successfully created."));
+                .andExpect(content().string(MOCK_LESSON.getId().toString()));
 
         verify(fileStorageService).createDirectory(MOCK_LESSON.getFolderName());
     }
 
     @Test
     void createLessonWithoutFolderName() throws Exception {
+        when(lessonsRepository.save(any())).thenReturn(MOCK_LESSON_WITH_EMPTY_FOLDER_NAME);
         String lessonJson = objectWriter.writeValueAsString(MOCK_LESSON_WITH_EMPTY_FOLDER_NAME);
 
         mvc.perform(MockMvcRequestBuilders
@@ -71,7 +74,7 @@ class LessonsControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Lesson with name: " + MOCK_LESSON_WITH_EMPTY_FOLDER_NAME.getName() + ", with folder name: " + MOCK_LESSON_WITH_EMPTY_FOLDER_NAME.getName() + ", successfully created."));
+                .andExpect(content().string(MOCK_LESSON_WITH_EMPTY_FOLDER_NAME.getId().toString()));
 
         verify(fileStorageService).createDirectory(MOCK_LESSON_WITH_EMPTY_FOLDER_NAME.getName());
     }

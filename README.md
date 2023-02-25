@@ -21,6 +21,7 @@ The project consists of two parts: **Frontend** and **Backend**.
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
 ![Bootstrap](https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
+![Apache Kafka](https://img.shields.io/badge/Apache%20Kafka-000?style=for-the-badge&logo=apachekafka)
 
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 
@@ -30,17 +31,16 @@ The project consists of two parts: **Frontend** and **Backend**.
 
 ### **Launching API**
 
-#### **Launching by Docker**
+Бекенд представляется из себя набор сервисов, связанных оркестратором. Для запуска бекенда необходимо запустить Kafka. Для этого от файла [docker-compose]([https://](https://github.com/MJSasha/les-doc/blob/master/docker-compose.yml)) вызовите команду:
 
-The API is launched using Docker. The API image is uploaded to [DockerHub]([https://](https://hub.docker.com/repository/docker/mjsasha/backend/general)). The project can be started from the [docker-compose]([https://](https://github.com/MJSasha/les-doc/blob/master/docker-compose.yml)) file, which is located in the root of the project. Launch Command:
+``` bash
+docker-compose up zookeeper kafka
+```
+
+Если вы хотите использовать *режим разработчика*, запустите compose файл целиком:
 
 ``` bash
 docker-compose up
-```
-For update use
-
-``` bash
-docker-compose up -d
 ```
 
 The API is deployed on port 8080, while SwaggerUI is available via the link [http://localhost:8080/api/swagger-ui.html](http://localhost:8080/api/swagger-ui.html).

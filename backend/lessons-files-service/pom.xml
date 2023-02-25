@@ -11,12 +11,6 @@
     <packaging>jar</packaging>
     <artifactId>lessons-files-service</artifactId>
 
-    <properties>
-        <maven.compiler.source>18</maven.compiler.source>
-        <maven.compiler.target>18</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
         <!--DB-->
         <dependency>
@@ -41,7 +35,10 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-
     </dependencies>
+
+    <build>
+        <finalName>lessons-files-service</finalName>
+    </build>
 
 </project>
