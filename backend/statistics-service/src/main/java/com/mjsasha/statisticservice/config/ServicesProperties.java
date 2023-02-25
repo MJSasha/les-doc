@@ -1,4 +1,4 @@
-package com.mjsasha.orchestrator.configs;
+package com.mjsasha.statisticservice.config;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +9,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "services")
 public class ServicesProperties {
 
-    private String filesAndLessonsOrigin;
-    private String statisticOrigin;
+    private String orchestratorOrigin;
 }

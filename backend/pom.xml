@@ -16,6 +16,8 @@
     <modules>
         <module>orchestrator</module>
         <module>lessons-files-service</module>
+        <module>statistics-service</module>
+        <module>common-models</module>
     </modules>
     <packaging>pom</packaging>
     <properties>

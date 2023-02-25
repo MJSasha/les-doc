@@ -1,0 +1,42 @@
+server:
+  servlet:
+    context-path: /api
+  port: 8082
+spring:
+  profiles:
+    active: prod
+  kafka:
+    consumer:
+      group-id: statisticGroup
+      auto-offset-reset: earliest
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:h2:mem:les-doc
+    driverClassName: org.h2.Driver
+    username: admin
+    password: admin
+services:
+  orchestrator-origin: http://localhost:8080
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://${PSQL_HOST:0.0.0.0}:${PSQL_PORT:5432}/${POSTGRES_DB:les-doc}
+    username: ${PSQL_USER:admin}
+    password: ${PSQL_PASSWORD:admin}
+services:
+  orchestrator-origin: ${ORCHESTRATOR_ORIGIN:http://localhost:8080}

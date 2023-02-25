@@ -18,11 +18,12 @@ public class LessonsService {
         this.fileStorageService = fileStorageService;
     }
 
-    public void create(Lesson lesson) {
+    public Integer create(Lesson lesson) {
         if (lesson.getFolderName() == null) lesson.setFolderName(lesson.getName());
 
-        lessonsRepository.save(lesson);
+        var createdLesson = lessonsRepository.save(lesson);
         fileStorageService.createDirectory(lesson.getFolderName());
+        return createdLesson.getId();
     }
 
     public Lesson read(Integer id) {

@@ -18,9 +18,8 @@ public class LessonsController {
     }
 
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody Lesson lesson) {
-        lessonsService.create(lesson);
-        return ResponseEntity.ok("Lesson with name: " + lesson.getName() + ", with folder name: " + lesson.getFolderName() + ", successfully created.");
+    public Integer create(@RequestBody Lesson lesson) {
+        return lessonsService.create(lesson);
     }
 
     @GetMapping

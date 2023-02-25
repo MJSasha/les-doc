@@ -1,10 +1,10 @@
 package com.mjsasha.orchestrator.controllers;
 
+import com.mjsasha.commonmodels.models.StatisticEvent;
+import com.mjsasha.commonmodels.models.StatisticEventModel;
 import com.mjsasha.orchestrator.configs.ServicesProperties;
 import com.mjsasha.orchestrator.kafka.StatisticProducer;
 import com.mjsasha.orchestrator.models.Lesson;
-import com.mjsasha.orchestrator.models.StatisticEvent;
-import com.mjsasha.orchestrator.models.StatisticEventModel;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,14 +28,13 @@ public class LessonsController {
 
     @Operation(summary = "Used to create a lesson")
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody Lesson lesson) {
-        var response = ResponseEntity.ok(
-                webClient
-                        .post().uri(CONTROLLER_URI)
-                        .body(Mono.just(lesson), Lesson.class)
-                        .retrieve().bodyToMono(String.class).block());
-        statisticProducer.sendEvent(new StatisticEventModel(StatisticEvent.LESSON_CREATED, lesson.getId()));
-        return response;
+    public Integer create(@RequestBody Lesson lesson) {
+        var lessonId = webClient
+                .post().uri(CONTROLLER_URI)
+                .body(Mono.just(lesson), Lesson.class)
+                .retrieve().bodyToMono(Integer.class).block();
+        statisticProducer.sendEvent(new StatisticEventModel(StatisticEvent.LESSON_CREATED, lessonId));
+        return lessonId;
     }
 
     @Operation(summary = "Used to read all lessons")

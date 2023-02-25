@@ -1,8 +1,11 @@
 package com.mjsasha.orchestrator.kafka;
 
-import com.mjsasha.orchestrator.models.StatisticEventModel;
+import com.mjsasha.commonmodels.models.StatisticEventModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +19,11 @@ public class StatisticProducer {
     }
 
     public void sendEvent(StatisticEventModel statisticEventModel) {
-        kafkaTemplate.send("statistic", statisticEventModel);
         log.info(String.format("### Sent event -> %s", statisticEventModel));
+
+        Message<StatisticEventModel> message = MessageBuilder.withPayload(statisticEventModel)
+                .setHeader(KafkaHeaders.TOPIC, "statistic")
+                .build();
+        kafkaTemplate.send(message);
     }
 }

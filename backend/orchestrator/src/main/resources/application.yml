@@ -21,10 +21,12 @@ spring:
       on-profile: dev
 services:
   files-and-lessons-origin: http://localhost:8081/api
+  statistic-origin: http://localhost:8082/api
 ---
 spring:
   config:
     activate:
       on-profile: prod
 services:
-  files-and-lessons-origin: ${FILES_AND_LESSONS_ORIGIN:http://localhost:8080} http://localhost:8081/api
+  files-and-lessons-origin: ${FILES_AND_LESSONS_ORIGIN:http://localhost:8081/api}
+  statistic-origin: ${FILES_AND_LESSONS_ORIGIN:http://localhost:8082}
