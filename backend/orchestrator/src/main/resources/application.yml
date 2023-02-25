@@ -5,6 +5,11 @@ server:
 spring:
   profiles:
     active: prod
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
