@@ -1,0 +1,25 @@
+server:
+  servlet:
+    context-path: /api
+  port: 8080
+spring:
+  profiles:
+    active: prod
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+services:
+  files-and-lessons-origin: http://localhost:8081/api
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+services:
+  files-and-lessons-origin: ${FILES_AND_LESSONS_ORIGIN:http://localhost:8080} http://localhost:8081/api

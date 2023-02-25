@@ -4,7 +4,6 @@ import com.mjsasha.lesdoc.data.entities.Lesson;
 import com.mjsasha.lesdoc.data.models.UploadFileResponse;
 import com.mjsasha.lesdoc.services.FileStorageService;
 import com.mjsasha.lesdoc.services.LessonsService;
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(maxAge = 3600)
 @RequestMapping("/files")
 public class FilesController {
 
@@ -36,7 +34,6 @@ public class FilesController {
         this.lessonsService = lessonsService;
     }
 
-    @Operation(summary = "Use for upload one file")
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file, @RequestParam Integer lessonId) {
         Lesson lesson = lessonsService.read(lessonId);
@@ -50,7 +47,6 @@ public class FilesController {
         return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
     }
 
-    @Operation(summary = "Use for upload many file")
     @PostMapping("/uploadMultipleFiles")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("file") MultipartFile[] files, @RequestParam Integer lessonId) {
         return Arrays.stream(files)
@@ -58,7 +54,6 @@ public class FilesController {
                 .collect(Collectors.toList());
     }
 
-    @Operation(summary = "Use for download uploaded files")
     @GetMapping("/downloadFile/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, @RequestParam Integer lessonId, HttpServletRequest request) {
         Lesson lesson = lessonsService.read(lessonId);
@@ -81,14 +76,12 @@ public class FilesController {
                 .body(resource);
     }
 
-    @Operation(summary = "Used to get the names of all files in the lesson folder")
     @GetMapping("/getAllFilesNames")
     public String[] getAllFilesName(@RequestParam Integer lessonId) {
         Lesson lesson = lessonsService.read(lessonId);
         return fileStorageService.getAllFilesNames(lesson.getFolderName());
     }
 
-    @Operation(summary = "Use to delete file")
     @DeleteMapping
     public void deleteFile(@RequestParam String fileName, @RequestParam Integer lessonId) {
         var lesson = lessonsService.read(lessonId);
