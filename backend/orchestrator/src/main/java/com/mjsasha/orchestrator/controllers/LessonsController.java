@@ -33,7 +33,9 @@ public class LessonsController {
                 .post().uri(CONTROLLER_URI)
                 .body(Mono.just(lesson), Lesson.class)
                 .retrieve().bodyToMono(Integer.class).block();
-        statisticProducer.sendEvent(new StatisticEventModel(StatisticEvent.LESSON_CREATED, lessonId));
+
+        if (lessonId != null)
+            statisticProducer.sendEvent(new StatisticEventModel(StatisticEvent.LESSON_CREATED, lessonId));
         return lessonId;
     }
 
@@ -60,7 +62,10 @@ public class LessonsController {
                 webClient
                         .delete().uri(CONTROLLER_URI + "/{id}", id)
                         .retrieve().bodyToMono(String.class).block());
-        statisticProducer.sendEvent(new StatisticEventModel(StatisticEvent.LESSON_DELETED, id, response.getBody()));
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            statisticProducer.sendEvent(new StatisticEventModel(StatisticEvent.LESSON_DELETED, id, response.getBody()));
+        }
         return response;
     }
 }
