@@ -31,33 +31,25 @@ The project consists of two parts: **Frontend** and **Backend**.
 
 ### **Launching API**
 
-Бекенд представляется из себя набор сервисов, связанных оркестратором. Для запуска бекенда необходимо запустить Kafka. Для этого от файла [docker-compose]([https://](https://github.com/MJSasha/les-doc/blob/master/docker-compose.yml)) вызовите команду:
-
-``` bash
-docker-compose up zookeeper kafka
-```
-
-Если вы хотите использовать *режим разработчика*, запустите compose файл целиком:
-
+1. Launch [docker-compose](https://github.com/MJSasha/les-doc/blob/master/docker-compose.yml)
 ``` bash
 docker-compose up
 ```
-
-The API is deployed on port 8080, while SwaggerUI is available via the link [http://localhost:8080/api/swagger-ui.html](http://localhost:8080/api/swagger-ui.html).
-
-#### **Launching by maven wrapper**
-
-If you don't want to use Docker, then you can run the backend with the following command from the folder [backend](https://github.com/MJSasha/les-doc/tree/master/backend):
-
+1. Go to the [backend](https://github.com/MJSasha/les-doc/tree/master/backend) folder and open the console in it 
+2. Launch orchestrator:
 ``` bash
-.\mvnw clean install spring-boot:run -Dspring-boot.run.profiles=dev
+.\mvnw clean install spring-boot:run -pl orchestrator
+```
+1. Open another console and run lessons-files-service:
+``` bash
+.\mvnw clean install spring-boot:run -pl lessons-files-service
+```
+1. *To collect statistics*, open another console and run statistics-service
+``` bash
+.\mvnw clean install spring-boot:run -pl statistics-service
 ```
 
-In this case, the In memory database will be started. If you want to use a regular database, then use the command:
-
-``` bash
-.\mvnw clean install spring-boot:run
-```
+Orchestrator is deployed on port 8080, while SwaggerUI is available via the link [http://localhost:8080/api/swagger-ui.html](http://localhost:8080/api/swagger-ui.html).
 
 ### **Launching React App**
 
