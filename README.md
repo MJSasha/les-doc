@@ -35,18 +35,21 @@ The project consists of two parts: **Frontend** and **Backend**.
 ``` bash
 docker-compose up
 ```
-1. Go to the [backend](https://github.com/MJSasha/les-doc/tree/master/backend) folder and open the console in it 
-2. Launch orchestrator:
+2. Go to the [backend](https://github.com/MJSasha/les-doc/tree/master/backend) folder and open the console in it. Execute command:
 ``` bash
-.\mvnw clean install spring-boot:run -pl orchestrator
+.\mvnw clean package
 ```
-1. Open another console and run lessons-files-service:
+3. Launch orchestrator:
 ``` bash
-.\mvnw clean install spring-boot:run -pl lessons-files-service
+.\mvnw spring-boot:run -pl orchestrator
 ```
-1. *To collect statistics*, open another console and run statistics-service
+4. Open another console and run lessons-files-service:
 ``` bash
-.\mvnw clean install spring-boot:run -pl statistics-service
+.\mvnw spring-boot:run -pl lessons-files-service
+```
+5. *To collect statistics*, open another console and run statistics-service
+``` bash
+.\mvnw spring-boot:run -pl statistics-service
 ```
 
 Orchestrator is deployed on port 8080, while SwaggerUI is available via the link [http://localhost:8080/api/swagger-ui.html](http://localhost:8080/api/swagger-ui.html).

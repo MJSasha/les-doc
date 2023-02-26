@@ -5,6 +5,9 @@ server:
 spring:
   profiles:
     active: prod
+  jpa:
+    hibernate:
+      ddl-auto: update
   kafka:
     consumer:
       group-id: statisticGroup

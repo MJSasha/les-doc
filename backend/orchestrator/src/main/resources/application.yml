@@ -29,4 +29,4 @@ spring:
       on-profile: prod
 services:
   files-and-lessons-origin: ${FILES_AND_LESSONS_ORIGIN:http://localhost:8081/api}
-  statistic-origin: ${FILES_AND_LESSONS_ORIGIN:http://localhost:8082}
+  statistic-origin: ${FILES_AND_LESSONS_ORIGIN:http://localhost:8082/api}
