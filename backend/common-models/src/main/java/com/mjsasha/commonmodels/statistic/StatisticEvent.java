@@ -4,6 +4,7 @@ public enum StatisticEvent {
 
     LESSON_CREATED,
     LESSON_DELETED,
-    UPLOADED_FILE,
-    DOWNLOADED_FILE
+    FILE_UPLOADED,
+    FILE_DOWNLOADED,
+    FILE_DELETED
 }

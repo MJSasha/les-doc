@@ -1,4 +1,4 @@
-package com.mjsasha;
+package com.mjsasha.orchestrator;
 
 import com.mjsasha.orchestrator.configs.ServicesProperties;
 import org.springframework.boot.SpringApplication;
