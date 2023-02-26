@@ -1,6 +1,6 @@
 package com.mjsasha.statisticservice.kafka;
 
-import com.mjsasha.commonmodels.models.StatisticEventModel;
+import com.mjsasha.commonmodels.statistic.StatisticEventModel;
 import com.mjsasha.statisticservice.models.StatisticEventEntity;
 import com.mjsasha.statisticservice.services.StatisticService;
 import lombok.extern.slf4j.Slf4j;

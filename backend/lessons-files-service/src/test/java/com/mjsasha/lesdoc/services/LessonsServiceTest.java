@@ -1,6 +1,6 @@
 package com.mjsasha.lesdoc.services;
 
-import com.mjsasha.lesdoc.data.entities.Lesson;
+import com.mjsasha.lesdoc.entities.Lesson;
 import com.mjsasha.lesdoc.exceptions.EntityNotFoundException;
 import com.mjsasha.lesdoc.repositories.LessonsRepository;
 import org.junit.jupiter.api.Test;

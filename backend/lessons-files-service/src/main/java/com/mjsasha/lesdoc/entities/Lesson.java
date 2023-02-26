@@ -1,4 +1,4 @@
-package com.mjsasha.lesdoc.data.entities;
+package com.mjsasha.lesdoc.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "lessons")
 public class Lesson {
-
+    // TODO - to common models (xml configuration)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

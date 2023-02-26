@@ -2,7 +2,7 @@ package com.mjsasha.lesdoc.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.mjsasha.lesdoc.data.models.UploadFileResponse;
+import com.mjsasha.commonmodels.files.UploadFileResponse;
 import com.mjsasha.lesdoc.repositories.LessonsRepository;
 import com.mjsasha.lesdoc.services.FileStorageService;
 import org.junit.jupiter.api.Test;

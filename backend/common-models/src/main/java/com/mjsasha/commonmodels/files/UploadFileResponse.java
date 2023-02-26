@@ -1,4 +1,4 @@
-package com.mjsasha.orchestrator.models;
+package com.mjsasha.commonmodels.files;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

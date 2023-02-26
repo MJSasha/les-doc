@@ -1,7 +1,7 @@
 package com.mjsasha.orchestrator.controllers;
 
-import com.mjsasha.commonmodels.models.StatisticEvent;
-import com.mjsasha.commonmodels.models.StatisticEventModel;
+import com.mjsasha.commonmodels.statistic.StatisticEvent;
+import com.mjsasha.commonmodels.statistic.StatisticEventModel;
 import com.mjsasha.orchestrator.configs.ServicesProperties;
 import com.mjsasha.orchestrator.kafka.StatisticProducer;
 import com.mjsasha.orchestrator.models.Lesson;
@@ -56,9 +56,11 @@ public class LessonsController {
     @Operation(summary = "Used to delete a lesson")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Integer id) {
-        return ResponseEntity.ok(
+        var response = ResponseEntity.ok(
                 webClient
                         .delete().uri(CONTROLLER_URI + "/{id}", id)
                         .retrieve().bodyToMono(String.class).block());
+        statisticProducer.sendEvent(new StatisticEventModel(StatisticEvent.LESSON_DELETED, id, response.getBody()));
+        return response;
     }
 }

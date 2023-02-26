@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Lesson {
-
+// TODO - to common models
     private Integer id;
 
     @NotBlank

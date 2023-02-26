@@ -1,7 +1,7 @@
 package com.mjsasha.orchestrator.controllers;
 
+import com.mjsasha.commonmodels.files.UploadFileResponse;
 import com.mjsasha.orchestrator.configs.ServicesProperties;
-import com.mjsasha.orchestrator.models.UploadFileResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.Resource;
