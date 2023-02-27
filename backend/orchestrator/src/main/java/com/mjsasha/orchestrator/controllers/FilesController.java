@@ -94,12 +94,12 @@ public class FilesController {
     @Operation(summary = "Used to get the names of all files in the lesson folder")
     @GetMapping("/getAllFilesNames")
     public String[] getAllFilesName(@RequestParam Integer lessonId) {
-        return (String[]) webClient
+        return webClient
                 .get().uri(uriBuilder -> uriBuilder
                         .path(CONTROLLER_URI + "/getAllFilesNames")
                         .queryParam("lessonId", lessonId)
                         .build())
-                .retrieve().bodyToFlux(String.class).toStream().toArray(String[]::new);
+                .retrieve().bodyToMono(String[].class).block();
     }
 
     @Operation(summary = "Use to delete file")
