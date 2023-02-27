@@ -19,8 +19,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static org.apache.tomcat.util.http.fileupload.FileUtils.deleteDirectory;
-
 @Service
 public class FileStorageService {
 
@@ -92,7 +90,7 @@ public class FileStorageService {
             File[] allContents = fileStorageLocation.resolve(directoryName).toFile().listFiles();
             if (allContents != null) {
                 for (File file : allContents) {
-                    deleteDirectory(file);
+                    file.delete();
                 }
             }
 
