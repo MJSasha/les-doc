@@ -21,6 +21,7 @@ The project consists of two parts: **Frontend** and **Backend**.
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
 ![Bootstrap](https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
+![Apache Kafka](https://img.shields.io/badge/Apache%20Kafka-000?style=for-the-badge&logo=apachekafka)
 
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 
@@ -30,34 +31,28 @@ The project consists of two parts: **Frontend** and **Backend**.
 
 ### **Launching API**
 
-#### **Launching by Docker**
-
-The API is launched using Docker. The API image is uploaded to [DockerHub]([https://](https://hub.docker.com/repository/docker/mjsasha/backend/general)). The project can be started from the [docker-compose]([https://](https://github.com/MJSasha/les-doc/blob/master/docker-compose.yml)) file, which is located in the root of the project. Launch Command:
-
+1. Launch [docker-compose](https://github.com/MJSasha/les-doc/blob/master/docker-compose.yml)
 ``` bash
 docker-compose up
 ```
-For update use
-
+2. Go to the [backend](https://github.com/MJSasha/les-doc/tree/master/backend) folder and open the console in it. Execute command:
 ``` bash
-docker-compose up -d
+.\mvnw clean package
+```
+3. Launch orchestrator:
+``` bash
+.\mvnw spring-boot:run -pl orchestrator
+```
+4. Open another console and run lessons-files-service:
+``` bash
+.\mvnw spring-boot:run -pl lessons-files-service
+```
+5. *To collect statistics*, open another console and run statistics-service
+``` bash
+.\mvnw spring-boot:run -pl statistics-service
 ```
 
-The API is deployed on port 8080, while SwaggerUI is available via the link [http://localhost:8080/api/swagger-ui.html](http://localhost:8080/api/swagger-ui.html).
-
-#### **Launching by maven wrapper**
-
-If you don't want to use Docker, then you can run the backend with the following command from the folder [backend](https://github.com/MJSasha/les-doc/tree/master/backend):
-
-``` bash
-.\mvnw clean install spring-boot:run -Dspring-boot.run.profiles=dev
-```
-
-In this case, the In memory database will be started. If you want to use a regular database, then use the command:
-
-``` bash
-.\mvnw clean install spring-boot:run
-```
+Orchestrator is deployed on port 8080, while SwaggerUI is available via the link [http://localhost:8080/api/swagger-ui.html](http://localhost:8080/api/swagger-ui.html).
 
 ### **Launching React App**
 
