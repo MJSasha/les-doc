@@ -72,6 +72,11 @@ const FileUpload: React.FC<IFileUpload> = ({updateFileList, setVisible}) => {
                             </div>
                         </div>
                     )}
+                    {message && (
+                        <div className="text-danger" role="alert">
+                            {message}
+                        </div>
+                    )}
                 </div>
             </div>
             <div className="modal-footer">
@@ -85,11 +90,6 @@ const FileUpload: React.FC<IFileUpload> = ({updateFileList, setVisible}) => {
                     >
                         Upload
                     </button>
-                    {message && (
-                        <div className="alert alert-secondary mt-3" role="alert">
-                            {message}
-                        </div>
-                    )}
                 </div>
             </div>
 
