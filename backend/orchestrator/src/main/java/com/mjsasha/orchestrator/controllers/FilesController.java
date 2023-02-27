@@ -99,7 +99,7 @@ public class FilesController {
                         .path(CONTROLLER_URI + "/getAllFilesNames")
                         .queryParam("lessonId", lessonId)
                         .build())
-                .retrieve().bodyToFlux(String.class).toStream().toArray();
+                .retrieve().bodyToFlux(String.class).toStream().toArray(String[]::new);
     }
 
     @Operation(summary = "Use to delete file")
