@@ -1,0 +1,9 @@
+.btn_icon:hover{
+    filter: invert(0.1) !important;
+}
+.file__card:hover{
+    background: #d7d7d7;
+}
+.transition__hov{
+    transition: 15ms;
+}

@@ -20,6 +20,7 @@ import XlsIcon from "../../images/xls.svg";
 import XmlIcon from "../../images/xml.svg";
 import ZipIcon from "../../images/zip.svg";
 import DocxIcon from "../../images/docx.svg";
+import DefIcon from "../../images/default.svg";
 import "./FileList.css";
 
 const FileList: React.FC = () => {
@@ -112,6 +113,8 @@ const FileList: React.FC = () => {
                 return ZipIcon;
             case 'docx':
                 return DocxIcon;
+            default:
+                return DefIcon;
         }
     }
 
@@ -144,7 +147,7 @@ const FileList: React.FC = () => {
                         {fileList && fileList.map((file, index) => {
                             return (
                                 <div key={index}
-                                     className="card border border-secondary m-1 h-100 d-flex flex-column justify-content-center align-items-center"
+                                     className="card file__card transition__hov border border-secondary my-1 mx-3 h-100 d-flex flex-column justify-content-evenly align-items-center"
                                      style={{maxWidth: '10rem', minHeight: '12rem', maxHeight: '14rem'}}>
                                     <img src={iconManager(file)} style={{maxWidth: '5rem'}}/>
                                     <div className="w-100 d-block text-truncate text-center text-wrap">
@@ -154,13 +157,13 @@ const FileList: React.FC = () => {
                                         <button className="btn btn-sm" onClick={() => {
                                             deleteFile(file)
                                         }}>
-                                            <img src={delete_icon} alt={delete_icon}
+                                            <img src={delete_icon} alt={delete_icon} className="btn_icon"
                                                  style={{width: "1.1rem", filter: "invert(0.5)"}}/>
                                         </button>
                                         <button className="btn btn-sm" onClick={() => {
                                             downloadFile(file)
                                         }}>
-                                            <img src={download_icon} alt={download_icon}
+                                            <img src={download_icon} alt={download_icon} className="btn_icon"
                                                  style={{width: "1.1rem", filter: "invert(0.4)"}}/>
                                         </button>
                                     </div>
