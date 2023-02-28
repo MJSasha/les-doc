@@ -20,6 +20,7 @@ spring:
     activate:
       on-profile: dev
 services:
+  convertor-origin: http://localhost:8083/api
   files-and-lessons-origin: http://localhost:8081/api
   statistic-origin: http://localhost:8082/api
 ---
@@ -28,5 +29,6 @@ spring:
     activate:
       on-profile: prod
 services:
+  convertor-origin: ${FILES_AND_LESSONS_ORIGIN:http://localhost:8083/api}
   files-and-lessons-origin: ${FILES_AND_LESSONS_ORIGIN:http://localhost:8081/api}
   statistic-origin: ${FILES_AND_LESSONS_ORIGIN:http://localhost:8082/api}

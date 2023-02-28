@@ -10,5 +10,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ServicesProperties {
 
     private String filesAndLessonsOrigin;
+    private String convertorOrigin;
     private String statisticOrigin;
 }

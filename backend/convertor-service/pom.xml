@@ -8,9 +8,11 @@
         <artifactId>les-doc</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
     <packaging>jar</packaging>
-    <groupId>com.mjsasha.convertor</groupId>
     <artifactId>convertor-service</artifactId>
+
+    <build>
+        <finalName>convertor-service</finalName>
+    </build>
 
 </project>
