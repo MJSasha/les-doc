@@ -1,4 +1,4 @@
-package com.mjsasha.orchestrator.configs;
+package com.mjsasha.statisticservice.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;

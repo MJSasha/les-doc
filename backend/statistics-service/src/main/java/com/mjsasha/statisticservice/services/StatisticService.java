@@ -4,6 +4,7 @@ import com.mjsasha.statisticservice.data.models.StatisticEventEntity;
 import com.mjsasha.statisticservice.repositories.StatisticRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -20,6 +21,7 @@ public class StatisticService {
     }
 
     public void create(StatisticEventEntity statisticEventEntity) {
+        statisticEventEntity.setDateTimeOfCreate(Instant.now());
         statisticRepository.save(statisticEventEntity);
     }
 }

@@ -39,6 +39,17 @@
 
     <build>
         <finalName>lessons-files-service</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <image>
+                        <name>mjsasha/lessons-files-service</name>
+                    </image>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
 </project>
