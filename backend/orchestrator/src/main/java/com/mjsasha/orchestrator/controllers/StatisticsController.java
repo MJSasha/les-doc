@@ -1,7 +1,7 @@
 package com.mjsasha.orchestrator.controllers;
 
-import com.mjsasha.commonmodels.statistic.StatisticEventModel;
 import com.mjsasha.orchestrator.configs.ServicesProperties;
+import com.mjsasha.orchestrator.models.StatisticEventModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

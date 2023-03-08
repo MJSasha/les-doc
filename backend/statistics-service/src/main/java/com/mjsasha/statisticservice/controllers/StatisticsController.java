@@ -1,6 +1,6 @@
 package com.mjsasha.statisticservice.controllers;
 
-import com.mjsasha.statisticservice.models.StatisticEventEntity;
+import com.mjsasha.statisticservice.data.models.StatisticEventEntity;
 import com.mjsasha.statisticservice.services.StatisticService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,10 +1,10 @@
 package com.mjsasha.orchestrator.controllers;
 
-import com.mjsasha.commonmodels.files.UploadFileResponse;
-import com.mjsasha.commonmodels.statistic.StatisticEvent;
-import com.mjsasha.commonmodels.statistic.StatisticEventModel;
 import com.mjsasha.orchestrator.configs.ServicesProperties;
 import com.mjsasha.orchestrator.kafka.StatisticProducer;
+import com.mjsasha.orchestrator.models.StatisticEvent;
+import com.mjsasha.orchestrator.models.StatisticEventModel;
+import com.mjsasha.orchestrator.models.UploadFileResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.Resource;
@@ -45,9 +45,10 @@ public class FilesController {
                         .build())
                 .body(BodyInserters.fromMultipartData(bodyBuilder.build()))
                 .retrieve().bodyToMono(UploadFileResponse.class).block();
-        statisticProducer.sendEvent(new StatisticEventModel(StatisticEvent.FILE_UPLOADED,
-                lessonId,
-                String.format("Uploaded file: %s", Objects.requireNonNull(response).getFileName())));
+        statisticProducer.sendEvent(new StatisticEventModel()
+                .setStatisticEvent(StatisticEvent.FILE_UPLOADED)
+                .setLessonId(lessonId)
+                .setData(String.format("Uploaded file: %s", Objects.requireNonNull(response).getFileName())));
         return response;
     }
 
@@ -66,9 +67,10 @@ public class FilesController {
                 .retrieve().bodyToFlux(UploadFileResponse.class).toStream().toList();
 
         for (var fileResponse : response) {
-            statisticProducer.sendEvent(new StatisticEventModel(StatisticEvent.FILE_UPLOADED,
-                    lessonId,
-                    String.format("Uploaded file: %s", Objects.requireNonNull(fileResponse).getFileName())));
+            statisticProducer.sendEvent(new StatisticEventModel()
+                    .setStatisticEvent(StatisticEvent.FILE_UPLOADED)
+                    .setLessonId(lessonId)
+                    .setData(String.format("Uploaded file: %s", Objects.requireNonNull(fileResponse).getFileName())));
         }
 
         return response;
@@ -86,7 +88,10 @@ public class FilesController {
                         .retrieve().bodyToMono(Resource.class).block());
 
         if (response.getStatusCode().is2xxSuccessful()) {
-            statisticProducer.sendEvent(new StatisticEventModel(StatisticEvent.FILE_DOWNLOADED, lessonId, fileName));
+            statisticProducer.sendEvent(new StatisticEventModel()
+                    .setStatisticEvent(StatisticEvent.FILE_DOWNLOADED)
+                    .setLessonId(lessonId)
+                    .setData(fileName));
         }
         return response;
     }
@@ -111,6 +116,9 @@ public class FilesController {
                         .queryParam("lessonId", lessonId)
                         .build())
                 .retrieve();
-        statisticProducer.sendEvent(new StatisticEventModel(StatisticEvent.FILE_DELETED, lessonId, fileName));
+        statisticProducer.sendEvent(new StatisticEventModel()
+                .setStatisticEvent(StatisticEvent.FILE_DELETED)
+                .setLessonId(lessonId)
+                .setData(fileName));
     }
 }

@@ -1,7 +1,7 @@
 package com.mjsasha.lesdoc.controllers;
 
-import com.mjsasha.commonmodels.files.UploadFileResponse;
-import com.mjsasha.lesdoc.entities.Lesson;
+import com.mjsasha.lesdoc.data.entities.Lesson;
+import com.mjsasha.lesdoc.data.models.UploadFileResponse;
 import com.mjsasha.lesdoc.services.FileStorageService;
 import com.mjsasha.lesdoc.services.LessonsService;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,6 +1,6 @@
 package com.mjsasha.statisticservice.services;
 
-import com.mjsasha.statisticservice.models.StatisticEventEntity;
+import com.mjsasha.statisticservice.data.models.StatisticEventEntity;
 import com.mjsasha.statisticservice.repositories.StatisticRepository;
 import org.springframework.stereotype.Service;
 

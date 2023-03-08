@@ -1,4 +1,4 @@
-package com.mjsasha.lesdoc.entities;
+package com.mjsasha.lesdoc.data.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

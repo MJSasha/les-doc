@@ -1,10 +1,10 @@
 package com.mjsasha.orchestrator.controllers;
 
-import com.mjsasha.commonmodels.statistic.StatisticEvent;
-import com.mjsasha.commonmodels.statistic.StatisticEventModel;
 import com.mjsasha.orchestrator.configs.ServicesProperties;
 import com.mjsasha.orchestrator.kafka.StatisticProducer;
 import com.mjsasha.orchestrator.models.Lesson;
+import com.mjsasha.orchestrator.models.StatisticEvent;
+import com.mjsasha.orchestrator.models.StatisticEventModel;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +35,9 @@ public class LessonsController {
                 .retrieve().bodyToMono(Integer.class).block();
 
         if (lessonId != null)
-            statisticProducer.sendEvent(new StatisticEventModel(StatisticEvent.LESSON_CREATED, lessonId));
+            statisticProducer.sendEvent(new StatisticEventModel()
+                    .setStatisticEvent(StatisticEvent.LESSON_CREATED)
+                    .setLessonId(lessonId));
         return lessonId;
     }
 
@@ -64,7 +66,10 @@ public class LessonsController {
                         .retrieve().bodyToMono(String.class).block());
 
         if (response.getStatusCode().is2xxSuccessful()) {
-            statisticProducer.sendEvent(new StatisticEventModel(StatisticEvent.LESSON_DELETED, id, response.getBody()));
+            statisticProducer.sendEvent(new StatisticEventModel()
+                    .setStatisticEvent(StatisticEvent.LESSON_DELETED)
+                    .setLessonId(id)
+                    .setData(response.getBody()));
         }
         return response;
     }

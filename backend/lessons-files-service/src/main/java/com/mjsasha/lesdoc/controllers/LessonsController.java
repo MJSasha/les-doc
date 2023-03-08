@@ -1,6 +1,6 @@
 package com.mjsasha.lesdoc.controllers;
 
-import com.mjsasha.lesdoc.entities.Lesson;
+import com.mjsasha.lesdoc.data.entities.Lesson;
 import com.mjsasha.lesdoc.services.LessonsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

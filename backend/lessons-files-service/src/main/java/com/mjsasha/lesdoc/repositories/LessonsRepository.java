@@ -1,6 +1,6 @@
 package com.mjsasha.lesdoc.repositories;
 
-import com.mjsasha.lesdoc.entities.Lesson;
+import com.mjsasha.lesdoc.data.entities.Lesson;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package com.mjsasha.lesdoc;
 
-import com.mjsasha.lesdoc.entities.Lesson;
+import com.mjsasha.lesdoc.data.entities.Lesson;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 
