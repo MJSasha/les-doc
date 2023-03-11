@@ -29,7 +29,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/lessons-files-service
 
   build-statistic-service:
-    name: Build lessons service
+    name: Build statistic service
     runs-on: ubuntu-latest
 
     steps:
