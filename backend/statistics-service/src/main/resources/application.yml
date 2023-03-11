@@ -1,7 +1,6 @@
 server:
   servlet:
     context-path: /api
-  port: 8082
 spring:
   profiles:
     active: prod
@@ -20,18 +19,21 @@ spring:
           json:
             trusted:
               packages: "*"
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
 ---
 spring:
   config:
     activate:
       on-profile: dev
   datasource:
-    url: jdbc:h2:mem:les-doc
-    driverClassName: org.h2.Driver
+    url: jdbc:postgresql://0.0.0.0:5432/les-doc
     username: admin
     password: admin
-services:
-  orchestrator-origin: http://localhost:8080
+server:
+  port: 8082
 ---
 spring:
   config:
@@ -41,5 +43,5 @@ spring:
     url: jdbc:postgresql://${PSQL_HOST:0.0.0.0}:${PSQL_PORT:5432}/${POSTGRES_DB:les-doc}
     username: ${PSQL_USER:admin}
     password: ${PSQL_PASSWORD:admin}
-services:
-  orchestrator-origin: ${ORCHESTRATOR_ORIGIN:http://localhost:8080}
+server:
+  port: 8080

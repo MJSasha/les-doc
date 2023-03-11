@@ -14,7 +14,6 @@
     <name>les-doc</name>
     <description>les-doc</description>
     <modules>
-        <module>orchestrator</module>
         <module>lessons-files-service</module>
         <module>statistics-service</module>
     </modules>
@@ -69,6 +68,13 @@
             <artifactId>mockito-core</artifactId>
             <version>5.0.0</version>
             <scope>test</scope>
+        </dependency>
+
+        <!--Swagger-->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
 
     </dependencies>

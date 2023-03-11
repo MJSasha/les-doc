@@ -1,4 +1,4 @@
-package com.mjsasha.orchestrator.models;
+package com.mjsasha.lesdoc.data.models;
 
 public enum StatisticEvent {
 
