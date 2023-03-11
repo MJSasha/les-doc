@@ -1,6 +1,6 @@
-package com.mjsasha.orchestrator.kafka;
+package com.mjsasha.lesdoc.kafka;
 
-import com.mjsasha.orchestrator.models.StatisticEventModel;
+import com.mjsasha.lesdoc.data.models.StatisticEventModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;

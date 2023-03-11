@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles(profiles = "dev")
+@ActiveProfiles(profiles = "test")
 class LessonsControllerIntegrationTest {
 
     private final ObjectWriter objectWriter;

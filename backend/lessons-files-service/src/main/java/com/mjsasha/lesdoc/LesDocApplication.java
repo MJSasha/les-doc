@@ -1,15 +1,13 @@
 package com.mjsasha.lesdoc;
 
 import com.mjsasha.lesdoc.configs.FileStorageProperties;
-import com.mjsasha.lesdoc.configs.ServicesProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
 @EnableConfigurationProperties({
-        FileStorageProperties.class,
-        ServicesProperties.class
+        FileStorageProperties.class
 })
 public class LesDocApplication {
 
