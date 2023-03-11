@@ -45,6 +45,17 @@
 
     <build>
         <finalName>statistics-service</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <image>
+                        <name>mjsasha/statistics-service</name>
+                    </image>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
 </project>
