@@ -14,6 +14,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  kafka:
+    producer:
+      key-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 file:
   upload-dir: ${UPLOADED_FILES_FOLDER_PATH:/uploaded-files}
 springdoc:
@@ -44,8 +48,6 @@ spring:
   kafka:
     producer:
       bootstrap-servers: localhost:9092
-      key-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 server:
   port: 8081
 ---
@@ -59,8 +61,6 @@ spring:
     password: ${PSQL_PASSWORD:admin}
   kafka:
     producer:
-      bootstrap-servers: localhost:${KAFKA_PORT:9092}
-      key-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      bootstrap-servers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
 server:
   port: 8080
