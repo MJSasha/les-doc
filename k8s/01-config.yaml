@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: les-doc-secrets
+data:
+  kafka_host: kafka-service
+  kafka_port: "9092"
+  postgres_host: postgres-svc
+  postgres_port: "5432"
+  postgres_dbname: les-doc
+  postgres_username: admin
+  postgres_password: admin

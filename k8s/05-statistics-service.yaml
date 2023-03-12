@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: statistics-service
+  labels:
+    app: statistics-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: statistics-service
+  template:
+    metadata:
+      labels:
+        app: statistics-service
+    spec:
+      containers:
+      - image: mjsasha/statistics-service
+        name: statistics-service
+        ports:
+          - containerPort: 8080
+        env:
+          - name: PSQL_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: les-doc-secrets
+                key: postgres_host
+          - name: PSQL_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: les-doc-secrets
+                key: postgres_port
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                name: les-doc-secrets
+                key: postgres_dbname
+          - name: PSQL_USER
+            valueFrom:
+              configMapKeyRef:
+                name: les-doc-secrets
+                key: postgres_username
+          - name: PSQL_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: les-doc-secrets
+                key: postgres_password
+          - name: KAFKA_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: les-doc-secrets
+                key: kafka_host
+          - name: KAFKA_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: les-doc-secrets
+                key: kafka_port
