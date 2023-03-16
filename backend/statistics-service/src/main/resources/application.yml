@@ -1,6 +1,3 @@
-server:
-  servlet:
-    context-path: /api
 spring:
   profiles:
     active: prod
@@ -36,6 +33,8 @@ spring:
       bootstrap-servers: localhost:9092
 server:
   port: 8082
+  servlet:
+    context-path: /api
 ---
 spring:
   config:
@@ -50,3 +49,5 @@ spring:
       bootstrap-servers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
 server:
   port: 8080
+  servlet:
+    context-path: ${SERVICE_ROOT:/api}
