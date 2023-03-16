@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: orchestrator
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /statistic
+          backend:
+            serviceName: statistics-svc
+            servicePort: 8080
+        - path: /lessonsFiles
+          backend:
+            serviceName: lessons-files-svc
+            servicePort: 8080

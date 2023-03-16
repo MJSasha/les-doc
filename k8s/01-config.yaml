@@ -5,6 +5,9 @@ metadata:
 data:
   kafka_host: kafka-service
   kafka_port: "9092"
+
+  zookeeper-connection: zookeeper-svc:2181
+
   postgres_host: postgres-svc
   postgres_port: "5432"
   postgres_dbname: les-doc

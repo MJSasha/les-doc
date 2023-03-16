@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: statistics-svc
+  name: lessons-files-svc
 spec:
   type: ClusterIP
   selector:
-    app: statistics-service
+    app: lessons-files-service
   ports:
     - port: 8080
       targetPort: 8080
@@ -13,22 +13,22 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: statistics-service
+  name: lessons-files-service
   labels:
-    app: statistics-service
+    app: lessons-files-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: statistics-service
+      app: lessons-files-service
   template:
     metadata:
       labels:
-        app: statistics-service
+        app: lessons-files-service
     spec:
       containers:
-      - image: mjsasha/statistics-service
-        name: statistics-service
+      - image: mjsasha/lessons-files-service
+        name: lessons-files-service
         ports:
           - containerPort: 8080
         env:
@@ -67,5 +67,3 @@ spec:
               configMapKeyRef:
                 name: les-doc-secrets
                 key: kafka_port
-          - name: spring.mvc.servlet.path
-            value: /statistic
